@@ -334,3 +334,11 @@ button.uc{font:inherit;color:#fff;cursor:pointer;background:rgba(255,255,255,.03
 .planimg .p-poche{fill:#5c6c73}
 .planimg .p-walls{fill:none;stroke:#aebcc2;stroke-width:.5;stroke-linejoin:round}
 .su rect{stroke-width:1.2}
+
+/* map: red perimeter + logo marker */
+.map-legend i{border-top:3px solid #e11d1d}
+path.lot{animation:none;stroke-dasharray:none}
+.logopin{background:none;border:0}
+.lp{position:relative;isolation:isolate;width:64px;height:64px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.45);animation:pin-drop .9s var(--ease) both}
+.lp::after{content:"";position:absolute;left:50%;bottom:-12px;width:18px;height:18px;background:#fff;transform:translateX(-50%) rotate(45deg);border-radius:0 0 4px 0;z-index:-1}
+.lp img{width:38px;height:38px;border-radius:0;object-fit:contain}

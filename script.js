@@ -40,18 +40,18 @@ addEventListener('scroll', () => {
 $('#burger').onclick = () => { $('#burger').classList.toggle('open'); $('#drawer').classList.toggle('open'); };
 $$('#drawer a').forEach(a => a.addEventListener('click', () => { $('#burger').classList.remove('open'); $('#drawer').classList.remove('open'); }));
 
-/* map: satellite view of the site with the lot perimeter */
+/* map: satellite, starts on the city and zooms in to the project; logo marker; red lot perimeter */
 const HOME = [7.880597377317534, -72.48866796931321];
-/* Perimeter traced by eye from a reference screenshot (zoom 19, ~0.296 m/px, pin tip at 500,362).
-   Replace PERIMETER with surveyed [lat, lng] points when available. */
-const PX = [[523, 313], [580, 347], [563, 415], [520, 497], [458, 465], [478, 385], [497, 350]];
-const M = 0.2958, REF = [500, 362];
-const PERIMETER = PX.map(([x, y]) => [
-  HOME[0] - ((y - REF[1]) * M) / 111320,
-  HOME[1] + ((x - REF[0]) * M) / 110270,
+/* Perimeter traced from the red outline of the client's reference image (610x652 px).
+   Calibrated against the earlier yellow outline: pin tip = HOME at (310,330), 0.2376 m/px. */
+const RED_PX = [[275, 125], [300, 145], [380, 195], [432, 238], [440, 262], [432, 330], [412, 405], [385, 470], [335, 520], [290, 560], [226, 592], [190, 568], [150, 525], [113, 490], [110, 466], [128, 443], [165, 420], [198, 385], [215, 340], [232, 295], [246, 240], [258, 190], [268, 150]];
+const MPP = 0.2376, PIN = [310, 330];
+const PERIMETER = RED_PX.map(([x, y]) => [
+  HOME[0] - ((y - PIN[1]) * MPP) / 111320,
+  HOME[1] + ((x - PIN[0]) * MPP) / 110270,
 ]);
 
-const map = L.map('map', { center: HOME, zoom: 19, maxZoom: 19, zoomControl: false, scrollWheelZoom: false });
+const map = L.map('map', { center: HOME, zoom: 12, maxZoom: 19, zoomControl: false, scrollWheelZoom: false });
 L.control.zoom({ position: 'topleft' }).addTo(map);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 19, attribution: 'Tiles &copy; Esri'
@@ -59,24 +59,33 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 map.on('click', () => map.scrollWheelZoom.enable());
 map.on('mouseout', () => map.scrollWheelZoom.disable());
 
-const lot = L.polygon(PERIMETER, { color: '#f2b705', weight: 3, dashArray: '8 7', fillColor: '#f2b705', fillOpacity: .12, className: 'lot' }).addTo(map);
-const pin = L.divIcon({
-  className: 'redpin', iconSize: [30, 42], iconAnchor: [15, 40],
-  html: '<svg viewBox="0 0 30 42" width="30" height="42"><path d="M15 1C7 1 1 7 1 15c0 10 14 26 14 26s14-16 14-26C29 7 23 1 15 1z" fill="#e23a3a" stroke="#fff" stroke-width="2"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>'
+const lot = L.polygon(PERIMETER, { color: '#e11d1d', weight: 4, lineJoin: 'round', fillColor: '#e11d1d', fillOpacity: .1, className: 'lot' }).addTo(map);
+const logoPin = L.divIcon({
+  className: 'logopin', iconSize: [64, 78], iconAnchor: [32, 74],
+  html: '<div class="lp"><img src="assets/logo-mark.svg" alt="Rivers Mall"></div>'
 });
-L.marker(HOME, { icon: pin, title: 'Rivers Mall Cúcuta' }).addTo(map);
+L.marker(HOME, { icon: logoPin, title: 'Rivers Mall Cúcuta', zIndexOffset: 1000 }).addTo(map);
 
-const views = [[19, 'lot'], [17, 'area'], [14, 'city']];
+const fits = {
+  0: () => map.flyTo(HOME, 12.6, { duration: 2.2 }),
+  1: () => map.flyTo(HOME, 16, { duration: 2.6 }),
+  2: () => map.flyToBounds(lot.getBounds().pad(.35), { duration: 3.2, maxZoom: 19 }),
+};
+const items = $$('#loc-list li');
 function showView(i) {
-  if (views[i][1] === 'lot') map.flyToBounds(lot.getBounds().pad(.9), { duration: 1.2, maxZoom: 19 });
-  else map.flyTo(HOME, views[i][0], { duration: 1.4 });
+  items.forEach((x, k) => x.classList.toggle('on', k === i));
+  fits[i]();
 }
-map.fitBounds(lot.getBounds().pad(.9), { maxZoom: 19 });
-$$('#loc-list li').forEach(li => li.onclick = () => {
-  $$('#loc-list li').forEach(x => x.classList.remove('on'));
-  li.classList.add('on');
-  showView(+li.dataset.i);
-});
+items.forEach(li => li.onclick = () => { clearTimeout(tour); showView(+li.dataset.i); });
+/* intro: city first, then closer, finally the project (starts when the map is on screen) */
+let tour, toured = false;
+new IntersectionObserver((es, o) => es.forEach(e => {
+  if (e.isIntersecting && !toured) {
+    toured = true; o.disconnect();
+    items.forEach((x, k) => x.classList.toggle('on', k === 0));
+    tour = setTimeout(() => { showView(1); tour = setTimeout(() => showView(2), 3200); }, 1800);
+  }
+}), { threshold: .5 }).observe($('#map'));
 
 /* floor plan: real units, clickable areas (rects in px of assets/plano-rot.png, 668x638) */
 const PW = 668, PH = 638;
