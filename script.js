@@ -167,7 +167,7 @@ $('#form').onsubmit = e => { e.preventDefault(); $('#ok').hidden = false; e.targ
     for (let k = 0; k < N; k++) {
       const t = k / N * Math.PI * 2 + rot;
       const c = Math.cos(8 * t);
-      const star = .74 + .26 * Math.sign(c) * Math.pow(Math.abs(c), .55);
+      const star = .82 + .15 * Math.sign(c) * Math.pow(Math.abs(c), .85);
       const cloud = .86 + .14 * Math.pow(Math.abs(Math.sin(6 * t)), .6);
       const r = (star + (cloud - star) * m) * .5;
       pts.push((50 + 100 * r * Math.cos(t - rot)).toFixed(2) + '% ' + (50 + 100 * r * Math.sin(t - rot)).toFixed(2) + '%');
