@@ -259,3 +259,9 @@ footer{grid-template-columns:1.2fr 1fr 1fr 1fr 1fr}
 /* hero: A7 render with Rivers blue wash */
 .hero .shade{background:linear-gradient(180deg,rgba(24,58,92,.78) 0%,rgba(47,106,154,.55) 45%,rgba(20,44,70,.85) 100%);mix-blend-mode:normal}
 .hero .bg{filter:saturate(.85)}
+/* story: blue wash + soft blur so photos don't dominate */
+.sbg.s1,.sbg.s2,.sbg.s3{filter:blur(4px) saturate(.75);transform:scale(1.06)}
+.sbg.s1::after,.sbg.s2::after,.sbg.s3::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,84,128,.82),rgba(59,118,168,.7) 50%,rgba(24,58,92,.88))}
+.shape::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(59,118,168,.45),rgba(24,58,92,.35));pointer-events:none;opacity:0;transition:opacity .8s var(--ease)}
+.stage:not([data-step="0"]) .shape::after{opacity:1}
+.si{filter:saturate(.8)}
