@@ -303,3 +303,28 @@ button.uc{font:inherit;color:#fff;cursor:pointer;background:rgba(255,255,255,.03
 .uinfo .st.a{color:#7fc0f0}.uinfo .st.o{color:#aab3b8}.uinfo .st.c{color:#e5b25a}
 .uinfo .pill{margin:0 6px 0 0}
 @media(max-width:900px){.plan-wrap{grid-template-columns:1fr}.ucards{grid-template-columns:repeat(3,1fr)}}
+
+/* traced vector plan, reference style */
+.planimg{background:#1d2528;border:1px solid rgba(255,255,255,.1);padding:10px;line-height:0}
+.planimg svg{width:100%;height:auto;display:block}
+.planimg .lotline{fill:none;stroke:#f2b705;stroke-width:2;stroke-dasharray:7 6;opacity:.8;animation:dash 1.6s linear infinite}
+.planimg .mass{fill:#2b3539;stroke:#8da0a8;stroke-width:1.6;stroke-linejoin:round}
+.planimg .zone{fill:#313d42;stroke:#4d5b62;stroke-width:1}
+.planimg .zone.hatch{fill:url(#hatch)}
+.planimg .circ{fill:#3a474d;stroke:none}
+.planimg .court{fill:none;stroke:#6b7b82;stroke-width:1.2}
+.planimg .void{fill:rgba(255,255,255,.02);stroke:#55636a;stroke-width:1.2;stroke-dasharray:3 5}
+.planimg .tree{fill:none;stroke:#6b8f72;stroke-width:1.4}
+.planimg .ztxt{font:600 9px Montserrat,sans-serif;letter-spacing:.3em;fill:#6b7b82}
+.su{cursor:pointer;outline:none}
+.su rect{fill:#3b76a8;stroke:#fff;stroke-width:1.4;transition:fill .3s,stroke-width .3s,filter .3s}
+.su.o rect{fill:#10171a;stroke:#6b7b82}
+.su.c rect{fill:transparent;stroke:#c0392b}
+.su circle{fill:#fff;opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.5);transition:opacity .3s,transform .3s}
+.su text{font:700 11px Montserrat,sans-serif;fill:#14181a;opacity:0;transition:opacity .3s;pointer-events:none}
+.su:hover rect,.su.hl rect,.su:focus-visible rect{fill:#5b95c6}
+.su.o:hover rect,.su.o.hl rect{fill:#1d272b}
+.su.on rect{fill:#7fb2de;stroke-width:3;filter:drop-shadow(0 0 8px rgba(127,178,222,.7))}
+.su:hover circle,.su.hl circle,.su.on circle,.su:focus-visible circle{opacity:1;transform:scale(1)}
+.su:hover text,.su.hl text,.su.on text,.su:focus-visible text{opacity:1}
+.su.on{animation:unit-flash 1.1s ease}

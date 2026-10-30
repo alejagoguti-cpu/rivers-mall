@@ -98,14 +98,48 @@ const pct = (v, t) => (v / t * 100).toFixed(3) + '%';
 
 $('#ucards').innerHTML = units.map(u =>
   '<button class="uc ' + u.s + '" data-id="' + u.id + '"><strong>' + u.name + '</strong><span class="tag">' + STATE[u.s] + '</span></button>').join('');
-$('#planimg').insertAdjacentHTML('beforeend', units.map(u => {
+/* vector plan traced from the CAD drawing (orig coords 638x668, rotated 90deg clockwise into 668x638) */
+const rot = (x, y) => [PH + 30 - y, x];
+const poly = pts => pts.map(([x, y]) => rot(x, y).join(',')).join(' ');
+const rect = (x1, y1, x2, y2, extra = '') => {
+  const [ax, ay] = rot(x1, y1), [bx, by] = rot(x2, y2);
+  return '<rect x="' + Math.min(ax, bx) + '" y="' + Math.min(ay, by) + '" width="' + Math.abs(bx - ax) + '" height="' + Math.abs(by - ay) + '" ' + extra + '/>';
+};
+const footprint = [
+  [[68, 58], [330, 58], [378, 196], [378, 232], [68, 232]],
+  [[68, 232], [258, 232], [258, 457], [68, 457]],
+  [[68, 457], [480, 457], [480, 570], [68, 570]],
+  [[258, 232], [295, 232], [295, 457], [258, 457]],
+];
+let svg = '<svg viewBox="0 0 ' + PW + ' ' + PH + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano del primer piso, Edificio Norte">';
+svg += '<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#4a585f" stroke-width="1"/></pattern></defs>';
+/* lot boundary */
+svg += '<polyline class="lotline" points="' + poly([[330, 58], [378, 196], [420, 290], [500, 345], [488, 430], [480, 570]]) + '"/>';
+/* building mass */
+footprint.forEach(p => svg += '<polygon class="mass" points="' + poly(p) + '"/>');
+/* non-commercial areas */
+svg += rect(68, 58, 330, 118, 'class="zone hatch"');
+svg += rect(105, 118, 295, 190, 'class="zone"');
+svg += rect(68, 196, 378, 232, 'class="circ"') + rect(218, 232, 258, 457, 'class="circ"') + rect(258, 232, 295, 420, 'class="circ"') + rect(258, 420, 368, 457, 'class="circ"');
+svg += rect(80, 205, 213, 260, 'class="court"');
+svg += rect(68, 420, 218, 457, 'class="zone hatch"');
+/* plaza void + trees */
+svg += '<polygon class="void" points="' + poly([[295, 232], [378, 232], [420, 290], [500, 345], [488, 430], [368, 457], [295, 420]]) + '"/>';
+[[432, 295], [428, 338], [447, 346]].forEach(([x, y]) => { const [cx, cy] = rot(x, y); svg += '<circle class="tree" cx="' + cx + '" cy="' + cy + '" r="8"/>'; });
+{ const [tx, ty] = rot(360, 335); svg += '<text class="ztxt" x="' + tx + '" y="' + ty + '" text-anchor="middle">PLAZA</text>'; }
+{ const [tx, ty] = rot(146, 232); svg += '<text class="ztxt" x="' + tx + '" y="' + ty + '" text-anchor="middle">CANCHA</text>'; }
+/* sale units */
+units.forEach(u => {
   const [x1, y1, x2, y2] = u.r;
-  return '<button class="hot ' + u.s + '" data-id="' + u.id + '" aria-label="' + u.name + '" style="left:' + pct(x1, PW) + ';top:' + pct(y1, PH) + ';width:' + pct(x2 - x1, PW) + ';height:' + pct(y2 - y1, PH) + '"><span>' + (u.id === 'cv' ? 'CV' : u.id) + '</span></button>';
-}).join(''));
+  svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '"><rect x="' + x1 + '" y="' + y1 + '" width="' + (x2 - x1) + '" height="' + (y2 - y1) + '"/>' +
+    '<circle cx="' + ((x1 + x2) / 2) + '" cy="' + ((y1 + y2) / 2) + '" r="10"/><text x="' + ((x1 + x2) / 2) + '" y="' + ((y1 + y2) / 2 + 4) + '" text-anchor="middle">' + (u.id === 'cv' ? 'CV' : u.id) + '</text></g>';
+});
+svg += '</svg>';
+$('#planimg').innerHTML = svg;
 
 function select(id) {
   const u = units.find(x => x.id === id);
-  $$('#ucards .uc, #planimg .hot').forEach(el => el.classList.toggle('on', el.dataset.id === id));
+  $$('#ucards .uc, #planimg .su').forEach(el => el.classList.toggle('on', el.dataset.id === id));
   $('#uinfo').innerHTML =
     '<div><small>Edificio Norte · Primer piso</small><h3>' + u.name + '</h3></div>' +
     '<dl><div><dt>Estado</dt><dd class="st ' + u.s + '">' + STATE[u.s] + '</dd></div>' +
@@ -116,7 +150,8 @@ function select(id) {
   $('#uinfo').classList.remove('pop'); void $('#uinfo').offsetWidth; $('#uinfo').classList.add('pop');
 }
 function link(id, on) { $$('[data-id="' + id + '"]').forEach(el => el.classList.toggle('hl', on)); }
-$$('#ucards .uc, #planimg .hot').forEach(el => {
+$('#ucards .uc, #planimg .su').forEach(el => {
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); } });
   el.addEventListener('click', () => select(el.dataset.id));
   el.addEventListener('mouseenter', () => link(el.dataset.id, true));
   el.addEventListener('mouseleave', () => link(el.dataset.id, false));
