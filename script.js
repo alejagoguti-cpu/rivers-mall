@@ -59,7 +59,8 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 map.on('click', () => map.scrollWheelZoom.enable());
 map.on('mouseout', () => map.scrollWheelZoom.disable());
 
-const lot = L.polygon(PERIMETER, { color: '#e11d1d', weight: 4, lineJoin: 'round', fillColor: '#e11d1d', fillOpacity: .1, className: 'lot' }).addTo(map);
+L.polygon(PERIMETER, { color: '#ffffff', weight: 7, opacity: .95, fill: false, lineJoin: 'round', interactive: false }).addTo(map);
+const lot = L.polygon(PERIMETER, { color: '#2f7fc4', weight: 3.5, lineJoin: 'round', fillColor: '#3b76a8', fillOpacity: .18, className: 'lot' }).addTo(map);
 const logoPin = L.divIcon({
   className: 'logopin', iconSize: [64, 78], iconAnchor: [32, 74],
   html: '<div class="lp"><img src="assets/logo-mark.svg" alt="Rivers Mall"></div>'
