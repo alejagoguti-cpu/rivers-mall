@@ -40,37 +40,42 @@ addEventListener('scroll', () => {
 $('#burger').onclick = () => { $('#burger').classList.toggle('open'); $('#drawer').classList.toggle('open'); };
 $$('#drawer a').forEach(a => a.addEventListener('click', () => { $('#burger').classList.remove('open'); $('#drawer').classList.remove('open'); }));
 
-/* map: Leaflet + CARTO dark tiles, centred on the project */
+/* map: satellite view of the site with the lot perimeter */
 const HOME = [7.880597377317534, -72.48866796931321];
-const map = L.map('map', { center: HOME, zoom: 15, zoomControl: false, scrollWheelZoom: false });
-L.control.zoom({ position: 'bottomright' }).addTo(map);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
+/* Perimeter traced by eye from a reference screenshot (zoom 19, ~0.296 m/px, pin tip at 500,362).
+   Replace PERIMETER with surveyed [lat, lng] points when available. */
+const PX = [[523, 313], [580, 347], [563, 415], [520, 497], [458, 465], [478, 385], [497, 350]];
+const M = 0.2958, REF = [500, 362];
+const PERIMETER = PX.map(([x, y]) => [
+  HOME[0] - ((y - REF[1]) * M) / 111320,
+  HOME[1] + ((x - REF[0]) * M) / 110270,
+]);
+
+const map = L.map('map', { center: HOME, zoom: 19, maxZoom: 19, zoomControl: false, scrollWheelZoom: false });
+L.control.zoom({ position: 'topleft' }).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19, attribution: 'Tiles &copy; Esri'
+}).addTo(map);
 map.on('click', () => map.scrollWheelZoom.enable());
 map.on('mouseout', () => map.scrollWheelZoom.disable());
-const label = (txt, cls = '') => L.divIcon({ className: 'mk ' + cls, html: `<i></i><b>${txt}</b>`, iconSize: [0, 0] });
-L.marker(HOME, { icon: label('Rivers Mall', 'main'), zIndexOffset: 1000 }).addTo(map);
 
-/* Category points are placeholders (offsets from the project): replace with real places */
-const off = (dy, dx) => [HOME[0] + dy, HOME[1] + dx];
-const places = [
-  [['Locales', off(.0020, .0025)], ['Zona comercial', off(-.0025, -.0030)]],
-  [['Transporte', off(.0030, -.0035)], ['Parada de bus', off(-.0020, .0035)]],
-  [['Mercado', off(.0018, -.0040)], ['Plaza de mercado', off(-.0030, .0020)]],
-  [['Parque', off(.0035, .0020)], ['Zona verde', off(-.0015, -.0045)]],
-  [['Cultura', off(.0025, -.0020)], ['Centro cultural', off(-.0028, .0030)]],
-  [['Universidad', off(.0030, .0040)], ['Instituto', off(-.0022, -.0025)]],
-];
-const layer = L.layerGroup().addTo(map);
-function drawMap(i) {
-  layer.clearLayers();
-  places[i].forEach(([n, ll], k) => setTimeout(() => L.marker(ll, { icon: label(n) }).addTo(layer), k * 150));
-  map.flyTo(HOME, 15.5, { duration: 1.2 });
+const lot = L.polygon(PERIMETER, { color: '#f2b705', weight: 3, dashArray: '8 7', fillColor: '#f2b705', fillOpacity: .12, className: 'lot' }).addTo(map);
+const pin = L.divIcon({
+  className: 'redpin', iconSize: [30, 42], iconAnchor: [15, 40],
+  html: '<svg viewBox="0 0 30 42" width="30" height="42"><path d="M15 1C7 1 1 7 1 15c0 10 14 26 14 26s14-16 14-26C29 7 23 1 15 1z" fill="#e23a3a" stroke="#fff" stroke-width="2"/><circle cx="15" cy="15" r="5" fill="#fff"/></svg>'
+});
+L.marker(HOME, { icon: pin, title: 'Rivers Mall Cúcuta' }).addTo(map);
+
+const views = [[19, 'lot'], [17, 'area'], [14, 'city']];
+function showView(i) {
+  if (views[i][1] === 'lot') map.flyToBounds(lot.getBounds().pad(.9), { duration: 1.2, maxZoom: 19 });
+  else map.flyTo(HOME, views[i][0], { duration: 1.4 });
 }
-drawMap(0);
+map.fitBounds(lot.getBounds().pad(.9), { maxZoom: 19 });
 $$('#loc-list li').forEach(li => li.onclick = () => {
   $$('#loc-list li').forEach(x => x.classList.remove('on'));
   li.classList.add('on');
-  drawMap(+li.dataset.i);
+  showView(+li.dataset.i);
 });
 
 /* buildings, units, plan */
