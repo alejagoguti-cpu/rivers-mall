@@ -158,3 +158,39 @@ $$('.stats b, [data-n]').forEach(el => {
 
 /* form */
 $('#form').onsubmit = e => { e.preventDefault(); $('#ok').hidden = false; e.target.reset(); };
+
+/* scroll story: sticky stage, step by scroll progress, star -> scallop morph */
+(() => {
+  const sec = $('#story'), stage = $('.stage', sec), shape = $('#shape');
+  const N = 220, STEPS = 4;
+  let target = 0, m = 0, rot = 0, rotT = 0;
+  const poly = (m, rot) => {
+    const pts = [];
+    for (let k = 0; k < N; k++) {
+      const t = k / N * Math.PI * 2 + rot;
+      const c = Math.cos(8 * t);
+      const star = .74 + .26 * Math.sign(c) * Math.pow(Math.abs(c), .55);
+      const cloud = .86 + .14 * Math.pow(Math.abs(Math.sin(6 * t)), .6);
+      const r = (star + (cloud - star) * m) * .5;
+      pts.push((50 + 100 * r * Math.cos(t - rot)).toFixed(2) + '% ' + (50 + 100 * r * Math.sin(t - rot)).toFixed(2) + '%');
+    }
+    return 'polygon(' + pts.join(',') + ')';
+  };
+  const ease = x => x * x * (3 - 2 * x);
+  function onScroll() {
+    const p = Math.min(Math.max((scrollY - sec.offsetTop) / (sec.offsetHeight - innerHeight), 0), .9999);
+    const step = Math.floor(p * STEPS);
+    stage.dataset.step = step;
+    target = ease(Math.min(Math.max((p * STEPS - .55) / .5, 0), 1));
+    rotT = p * Math.PI * .6;
+  }
+  function frame() {
+    m += (target - m) * .09;
+    rot += (rotT - rot) * .09;
+    shape.style.clipPath = poly(m, rot);
+    shape.style.transform = 'rotate(' + (-rot * 20).toFixed(2) + 'deg) scale(' + (1 + m * .08).toFixed(3) + ')';
+    requestAnimationFrame(frame);
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); frame();
+})();
