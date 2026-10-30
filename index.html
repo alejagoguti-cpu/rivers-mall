@@ -3,130 +3,165 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rivers Mall | Locales comerciales en arriendo</title>
+<title>Rivers Mall Cúcuta | Locales comerciales en arriendo</title>
+<link rel="icon" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="nav">
-  <a class="logo" href="#">Rivers<span>Mall</span></a>
-  <button id="menu" aria-label="Menú">☰</button>
-  <nav id="links">
-    <a href="#ubicacion">Ubicación</a><a href="#plano">Plano</a><a href="#unidades">Locales</a>
-    <a href="#vecinos">Vecinos</a><a class="btn small dl" href="assets/brochure.pdf" download>Descargar brochure</a>
-    <a class="btn small" href="#contacto">Contáctanos</a>
-  </nav>
+<div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
+
+<header class="nav" id="nav">
+  <div class="nav-l">
+    <a class="pill sm" href="#intro"><em>Inicio</em><em>Inicio</em></a>
+    <a class="pill sm" href="#ubicacion"><em>Ubicación</em><em>Ubicación</em></a>
+    <a class="pill sm" href="#plano"><em>Locales</em><em>Locales</em></a>
+    <a class="pill sm" href="#contacto"><em>Contacto</em><em>Contacto</em></a>
+  </div>
+  <a class="logo" href="#top" aria-label="Rivers Mall Cúcuta">
+    <img src="assets/logo-mark.svg" alt=""><span><b>RIVERS</b><i>MALL</i><small>CÚCUTA</small></span>
+  </a>
+  <div class="nav-r">
+    <a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>
+    <a class="pill sm" href="#contacto"><em>Consultar</em><em>Consultar</em></a>
+    <button id="burger" aria-label="Menú"><span></span><span></span></button>
+  </div>
 </header>
 
-<section class="hero" style="--img:url(assets/hero.svg)">
-  <div>
-    <p class="eyebrow">Locales disponibles</p>
-    <h1>Locales comerciales<br>en arriendo</h1>
-    <p>Rivers Mall ofrece locales de retail, ocio y servicios en un entorno con miles de visitantes cada semana.</p>
-    <a class="btn" href="#plano">Ver locales</a>
-    <a class="btn big" href="assets/brochure.pdf" download>Descargar brochure</a>
-    <a class="btn ghost" href="#unidades">Unidades disponibles</a>
-  </div>
-</section>
+<aside id="drawer">
+  <a href="#intro">Rivers Mall</a><a href="#ubicacion">Ubicación</a><a href="#plano">Locales</a>
+  <a href="#unidades">Unidades</a><a href="#vecinos">Vecinos</a><a href="#contacto">Contacto</a>
+  <a href="assets/brochure.pdf" download>Descargar brochure</a>
+</aside>
 
-<section class="stats">
-  <div><b>00.000</b><span>Visitantes por semana</span></div>
-  <div><b>00</b><span>Locales</span></div>
-  <div><b>00</b><span>Disponibles</span></div>
-  <div><b>0 min</b><span>Al transporte público</span></div>
-</section>
-
-<section id="ubicacion" class="block">
-  <h2>Ubicados para rendir</h2>
-  <p class="lead">A pocos minutos del transporte público y de las principales zonas de la ciudad.</p>
-  <div class="tabs" data-group="loc">
-    <button class="active" data-tab="1">Locales</button><button data-tab="2">Transporte</button>
-    <button data-tab="3">Mercados</button><button data-tab="4">Zonas verdes</button>
-    <button data-tab="5">Cultura</button><button data-tab="6">Universidades</button>
-  </div>
-  <div class="panel split">
-    <img id="loc-img" src="assets/loc-1.svg" alt="">
-    <p id="loc-text"></p>
-  </div>
-</section>
-
-<section id="plano" class="block alt">
-  <h2>Donde tu marca pertenece</h2>
-  <p class="lead">Desde locales compactos hasta grandes formatos. Explora el plano y encuentra el espacio ideal.</p>
-  <div class="tabs" data-group="bld">
-    <button class="active" data-b="0">Torre Norte</button>
-    <button data-b="1">Plaza Central</button>
-    <button data-b="2">Edificio Río</button>
-  </div>
-  <div class="split">
-    <img id="bld-img" src="assets/bld-1.svg" alt="">
-    <div>
-      <p id="bld-text"></p>
-      <div id="plan" class="plan"></div>
-      <p class="legend"><i class="dot a"></i>Disponible <i class="dot o"></i>Ocupado <i class="dot c"></i>Próximamente</p>
-      <a class="btn" href="#contacto">Consultar</a>
-      <a class="btn ghost dark" href="assets/brochure.pdf" download>Descargar brochure</a>
+<section class="hero" id="top">
+  <video class="bg" autoplay muted loop playsinline poster="assets/hero.svg"><source src="assets/hero.mp4" type="video/mp4"></video>
+  <div class="shade"></div>
+  <div class="hero-in">
+    <h1 class="load" style="--d:.3s">Locales disponibles<br>ahora en arriendo</h1>
+    <p class="load" style="--d:.5s">En Rivers Mall Cúcuta encuentras locales de retail, ocio y servicios en un destino con miles de visitantes cada semana.</p>
+    <div class="load" style="--d:.7s">
+      <a class="pill ghost" href="#plano"><em>Ver locales</em><em>Ver locales</em></a>
+      <a class="pill ghost" href="#unidades"><em>Unidades disponibles</em><em>Unidades disponibles</em></a>
     </div>
   </div>
 </section>
 
-<section id="unidades" class="block">
-  <h2>Elige tu espacio ideal</h2>
-  <p class="lead">Tamaños, uso y precio de las unidades actuales.</p>
-  <div id="cards" class="cards"></div>
-  <button id="more" class="btn ghost dark">Cargar más</button>
+<section class="sage" id="intro">
+  <p class="eyebrow rv">Rivers Mall Cúcuta</p>
+  <h2 class="serif rv" style="--d:.1s">Un nuevo destino<br>de comercio</h2>
+  <p class="rv" style="--d:.2s">Un espacio pensado para marcas que quieren crecer en el corazón de Cúcuta.</p>
+  <a class="pill dark rv" style="--d:.3s" href="#plano"><em>Explorar locales</em><em>Explorar locales</em></a>
 </section>
 
-<section id="vecinos" class="block alt">
-  <h2>Conoce a tus vecinos</h2>
-  <p class="lead">Un entorno con comida, cultura y creatividad. Explora el barrio que rodea Rivers Mall.</p>
+<section class="band"><div class="track"><span>RIVERS MALL CÚCUTA</span><span>RIVERS MALL CÚCUTA</span><span>RIVERS MALL CÚCUTA</span><span>RIVERS MALL CÚCUTA</span></div></section>
+
+<section class="lilac ready">
+  <div class="blob b1"></div><div class="blob b2"></div>
+  <div class="ready-in rv">
+    <p class="eyebrow">¿Estás listo</p>
+    <h2 class="serif big">LISTO</h2>
+    <p class="eyebrow">para ser parte de</p>
+    <h2 class="serif big">Rivers?</h2>
+  </div>
+</section>
+
+<section class="perform" id="ubicacion">
+  <div class="perform-l">
+    <div class="blob mini"></div>
+    <h2 class="serif rv">Ubicados<br>para rendir</h2>
+    <p class="rv" style="--d:.1s">A pocos minutos de las principales zonas de Cúcuta, Rivers Mall te pone al alcance de compradores de toda la ciudad.</p>
+    <ul class="menu-list" id="loc-list">
+      <li class="on" data-i="0">Locales</li><li data-i="1">Transporte</li><li data-i="2">Mercados</li>
+      <li data-i="3">Zonas verdes</li><li data-i="4">Centros culturales</li><li data-i="5">Universidades</li>
+    </ul>
+  </div>
+  <div class="map" id="map"><span class="pin main"><b>Rivers Mall</b></span></div>
+</section>
+
+<section class="dark" id="plano">
+  <p class="eyebrow rv">Locales</p>
+  <h2 class="serif huge rv" style="--d:.1s">Donde tu marca pertenece</h2>
+  <p class="lead rv" style="--d:.2s">Desde unidades compactas hasta grandes formatos, Rivers Mall ofrece distintas oportunidades comerciales. Explora el plano y encuentra el espacio ideal.</p>
+  <div class="toggle rv" style="--d:.3s">
+    <button class="pill sm on" data-t="Retail"><em>Retail</em><em>Retail</em></button>
+    <button class="pill sm" data-t="Oficinas"><em>Oficinas</em><em>Oficinas</em></button>
+    <button class="pill sm ghost" id="filter"><em>Filtrar</em><em>Filtrar</em></button>
+  </div>
+  <div class="btabs rv" id="btabs" style="--d:.4s"></div>
+  <p class="lead sm" id="bld-text"></p>
+  <div class="plan-wrap">
+    <div class="ucards" id="ucards"></div>
+    <div class="plan3d"><div class="plan" id="plan"></div></div>
+  </div>
+  <div class="legend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
+  <div class="cta-row">
+    <b>Ayuda a dar forma al nuevo destino de Cúcuta</b>
+    <a class="pill sm" href="#contacto"><em>Consultar</em><em>Consultar</em></a>
+    <a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>
+  </div>
+</section>
+
+<section class="lilac units" id="unidades">
+  <p class="eyebrow rv">Unidades disponibles</p>
+  <h2 class="serif rv" style="--d:.1s">Elige tu espacio ideal</h2>
+  <p class="lead rv" style="--d:.2s">Explora tamaños, uso y precio de las unidades actuales en Rivers Mall.</p>
+  <div class="cards" id="cards"></div>
+  <button class="pill dark" id="more"><em>Cargar más</em><em>Cargar más</em></button>
+</section>
+
+<section class="neigh" id="vecinos">
+  <p class="eyebrow rv">Conoce a tus nuevos vecinos</p>
+  <h2 class="serif rv" style="--d:.1s">Rodeado de comida, cultura y creatividad</h2>
   <div class="gallery">
-    <figure><img src="assets/nb-1.svg" alt=""><figcaption>Vecino 1</figcaption></figure>
-    <figure><img src="assets/nb-2.svg" alt=""><figcaption>Vecino 2</figcaption></figure>
-    <figure><img src="assets/nb-3.svg" alt=""><figcaption>Vecino 3</figcaption></figure>
-    <figure><img src="assets/nb-4.svg" alt=""><figcaption>Vecino 4</figcaption></figure>
+    <figure class="rv"><img class="tilt" src="assets/nb-1.svg" alt=""></figure>
+    <figure class="rv" style="--d:.1s"><img class="tilt" src="assets/nb-2.svg" alt=""></figure>
+    <figure class="rv" style="--d:.2s"><img class="tilt" src="assets/nb-3.svg" alt=""></figure>
+    <figure class="rv" style="--d:.3s"><img class="tilt" src="assets/nb-4.svg" alt=""></figure>
   </div>
-  <a class="btn" href="#">Saber más</a>
+  <a class="pill dark" href="#"><em>Saber más</em><em>Saber más</em></a>
 </section>
 
-<section id="brochure" class="block split brochure">
-  <img src="assets/brochure.svg" alt="">
-  <div>
-    <h2>Una mirada más profunda</h2>
-    <p class="lead">Descarga el brochure para conocer Rivers Mall completo: locales disponibles y la historia del proyecto.</p>
-    <a class="btn big" href="assets/brochure.pdf" download>Descargar brochure</a>
+<section class="sage brochure" id="brochure">
+  <div class="rv"><img class="tilt" src="assets/brochure.svg" alt=""></div>
+  <div class="rv" style="--d:.15s">
+    <h2 class="serif">Una mirada más profunda a Rivers Mall</h2>
+    <p>Descarga nuestro brochure para conocer Rivers Mall completo: locales disponibles y la historia del proyecto.</p>
+    <a class="pill dark" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>
   </div>
 </section>
 
-<section id="contacto" class="block alt">
-  <h2>Contáctanos</h2>
-  <form id="form">
+<section class="dark form-s" id="contacto">
+  <h2 class="serif rv">Déjanos tus datos</h2>
+  <form id="form" class="rv">
     <fieldset><legend>Tus datos</legend>
       <input required placeholder="Nombre*"><input required placeholder="Apellido*">
       <input required type="tel" placeholder="Teléfono*"><input required type="email" placeholder="Email*">
     </fieldset>
-    <fieldset><legend>Tu negocio</legend>
+    <fieldset><legend>Sobre tu negocio</legend>
       <input required placeholder="Empresa*">
       <select required><option value="">Tipo de negocio*</option><option>Comida y bebida</option><option>Moda y retail</option><option>Salud y belleza</option><option>Fitness y bienestar</option><option>Servicios</option><option>Otro</option></select>
       <input type="url" placeholder="Sitio web (opcional)">
     </fieldset>
-    <fieldset><legend>Requerimientos</legend>
+    <fieldset><legend>Tus requerimientos</legend>
       <select required><option value="">Tamaño preferido*</option><option>Menos de 50 m²</option><option>50–100 m²</option><option>Más de 100 m²</option><option>Flexible</option></select>
       <select required><option value="">¿Cómo nos conociste?*</option><option>Redes sociales</option><option>Buscador</option><option>Referido</option><option>Publicidad online</option><option>Publicidad exterior</option><option>Otro</option></select>
       <textarea placeholder="Mensaje (opcional)"></textarea>
     </fieldset>
-    <button class="btn" type="submit">Enviar consulta</button>
+    <button class="pill" type="submit"><em>Enviar consulta</em><em>Enviar consulta</em></button>
     <p id="ok" hidden>¡Gracias! Te contactaremos pronto.</p>
   </form>
 </section>
 
-<a class="fab" href="assets/brochure.pdf" download>⬇ Descargar brochure</a>
-
 <footer>
-  <div><a class="logo" href="#">Rivers<span>Mall</span></a></div>
-  <div><b>Dirección</b><br>Por definir</div>
-  <div><b>Llámanos</b><br>000 000 0000</div>
-  <div><b>Horario</b><br>Lun–Vie 8:00–20:00<br>Sáb–Dom 9:00–17:00</div>
+  <a class="logo" href="#top"><img src="assets/logo-mark.svg" alt=""><span><b>RIVERS</b><i>MALL</i><small>CÚCUTA</small></span></a>
+  <div><h4>Dirección</h4><p>Cúcuta, Colombia</p></div>
+  <div><h4>Llámanos</h4><p>000 000 0000</p></div>
+  <div><h4>Horario</h4><p>Lun–Vie 8:00 – 20:00<br>Sáb–Dom 9:00 – 17:00</p></div>
 </footer>
+<a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
 <script src="script.js"></script>
 </body>
 </html>
