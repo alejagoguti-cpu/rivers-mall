@@ -20,8 +20,8 @@ a{color:inherit;text-decoration:none}
 .pill em{display:block;font-style:normal;transition:transform .45s var(--ease)}
 .pill:hover em{transform:translateY(-100%)}
 .pill:hover{background:#fff;color:var(--ink);border-color:#fff}
-.pill.dark{color:var(--ink);border-color:var(--ink)}
-.pill.dark:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill.ink{color:var(--ink);border-color:var(--ink)}
+.pill.ink:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pill.sm{height:34px;line-height:34px;padding:0 18px;font-size:10px}
 .pill.ghost{color:#fff;border-color:rgba(255,255,255,.7);backdrop-filter:blur(6px)}
 .pill.on{background:#fff;color:var(--ink);border-color:#fff}
@@ -213,3 +213,7 @@ html{overflow-x:hidden}.logo img{max-width:none}
 .band span{font-weight:800;font-size:clamp(60px,9vw,140px)}
 .card h3{font-size:22px}
 .logo i,.logo small{font-weight:300}
+.gallery figure{aspect-ratio:4/5;margin:0}
+.gallery img{width:100%;height:100%;object-fit:cover;border-radius:0}
+.card img{aspect-ratio:4/3;object-fit:cover}
+.brochure img{aspect-ratio:3/2;object-fit:cover;width:100%}

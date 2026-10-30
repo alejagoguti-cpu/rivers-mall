@@ -144,7 +144,7 @@ const avail = units.filter(u => u.s === 'a');
 let shown = 0;
 function more() {
   avail.slice(shown, shown + 4).forEach((u, k) => $('#cards').insertAdjacentHTML('beforeend',
-    `<div class="card" style="--d:${k * .1}s"><img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80" alt=""><small>${buildings[u.b].name}</small><h3>Local ${u.id}</h3><p>Uso: Retail</p><p>Superficie: ${u.m2} m²</p><p>Precio: Consultar</p><a class="pill sm dark" href="#contacto"><em>Detalles</em><em>Detalles</em></a><a class="pill sm dark" href="#contacto"><em>Consultar</em><em>Consultar</em></a></div>`));
+    `<div class="card" style="--d:${k * .1}s"><img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80" alt=""><small>${buildings[u.b].name}</small><h3>Local ${u.id}</h3><p>Uso: Retail</p><p>Superficie: ${u.m2} m²</p><p>Precio: Consultar</p><a class="pill sm ink" href="#contacto"><em>Detalles</em><em>Detalles</em></a><a class="pill sm ink" href="#contacto"><em>Consultar</em><em>Consultar</em></a></div>`));
   shown += 4;
   if (shown >= avail.length) $('#more').hidden = true;
 }
