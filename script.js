@@ -40,10 +40,7 @@ $$('#drawer a').forEach(a => a.addEventListener('click', () => { $('#burger').cl
 const HOME = [7.880597377317534, -72.48866796931321];
 const map = L.map('map', { center: HOME, zoom: 15, zoomControl: false, scrollWheelZoom: false });
 L.control.zoom({ position: 'bottomright' }).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-  maxZoom: 19, subdomains: 'abcd',
-  attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
 map.on('click', () => map.scrollWheelZoom.enable());
 map.on('mouseout', () => map.scrollWheelZoom.disable());
 const label = (txt, cls = '') => L.divIcon({ className: 'mk ' + cls, html: `<i></i><b>${txt}</b>`, iconSize: [0, 0] });
