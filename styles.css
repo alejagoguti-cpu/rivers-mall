@@ -202,3 +202,14 @@ footer p{font-size:13px}
 .sword:not(.w0){color:#eaffc0;text-shadow:0 2px 30px rgba(0,0,0,.18)}
 .stage[data-step="0"] .w0,.stage[data-step="1"] .w1,.stage[data-step="2"] .w2,.stage[data-step="3"] .w3{opacity:1;transform:translateY(-50%) scale(1)}
 html{overflow-x:hidden}.logo img{max-width:none}
+/* typography = logo font (heavy geometric sans) */
+.serif,.hero h1,.sword,.band span,.card h3,#drawer a,.ucards strong{font-family:Montserrat,sans-serif;font-weight:800;letter-spacing:.01em}
+.hero h1{font-size:clamp(30px,4.4vw,64px);line-height:1.08}
+.sage h2{font-size:clamp(28px,4vw,54px)}
+.perform h2,.units h2,.form-s h2,.brochure h2{font-size:clamp(26px,3.4vw,48px)}
+.dark .huge{font-size:clamp(28px,4.6vw,64px)}
+.neigh h2{font-size:clamp(24px,3vw,42px)}
+.sword{font-size:clamp(40px,9vw,140px)}
+.band span{font-weight:800;font-size:clamp(60px,9vw,140px)}
+.card h3{font-size:22px}
+.logo i,.logo small{font-weight:300}
