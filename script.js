@@ -150,7 +150,7 @@ function select(id) {
   $('#uinfo').classList.remove('pop'); void $('#uinfo').offsetWidth; $('#uinfo').classList.add('pop');
 }
 function link(id, on) { $$('[data-id="' + id + '"]').forEach(el => el.classList.toggle('hl', on)); }
-$('#ucards .uc, #planimg .su').forEach(el => {
+$$('#ucards .uc, #planimg .su').forEach(el => {
   el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); } });
   el.addEventListener('click', () => select(el.dataset.id));
   el.addEventListener('mouseenter', () => link(el.dataset.id, true));
