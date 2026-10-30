@@ -78,82 +78,70 @@ $$('#loc-list li').forEach(li => li.onclick = () => {
   showView(+li.dataset.i);
 });
 
-/* buildings, units, plan */
-const buildings = [
-  { name: 'Torre Norte', text: 'Torre Norte: locales de gran formato con vista a la plaza principal. Ideal para marcas ancla y restaurantes.' },
-  { name: 'Plaza Central', text: 'Plaza Central: el corazón del centro comercial, con gran flujo peatonal para comida y servicios.' },
-  { name: 'Edificio Río', text: 'Edificio Río: unidades compactas para marcas independientes, salones y tiendas de especialidad.' },
-  { name: 'Patio Sur', text: 'Patio Sur: espacios abiertos pensados para gastronomía y ocio.' },
+/* floor plan: real units, clickable areas (rects in px of assets/plano-rot.png, 668x638) */
+const PW = 668, PH = 638;
+const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
+const units = [
+  { id: '5', name: 'Local 5', s: 'a', area: '105,53 m²', r: [363, 68, 400, 218] },
+  { id: '6', name: 'Local 6', s: 'a', area: '105,53 m²', r: [324, 68, 363, 218] },
+  { id: '7', name: 'Local 7', s: 'a', area: null, r: [286, 68, 324, 218] },
+  { id: '8', name: 'Local 8', s: 'a', area: null, r: [248, 68, 286, 218] },
+  { id: '1', name: 'Local 1', s: 'a', area: '102,49 m²', r: [98, 219, 211, 256] },
+  { id: '2', name: 'Local 2', s: 'a', area: '102,49 m²', r: [98, 256, 211, 293] },
+  { id: '3', name: 'Local 3', s: 'a', area: '102,49 m²', r: [98, 293, 211, 331] },
+  { id: '4', name: 'Local 4', s: 'a', area: '102,49 m²', r: [98, 331, 211, 368] },
+  { id: 'cv', name: 'Cruz Verde', s: 'o', area: '292,41 m²', r: [98, 368, 211, 480] },
 ];
-const pattern = ['a', 'a', 'o', 'a', 'a', 'c', 'a', 'a', 'o', 'a', 'a', 'a'];
-const names = { a: 'DISPONIBLE', o: 'OCUPADO', c: 'PRÓXIMAMENTE' };
-const units = [];
-buildings.forEach((b, bi) => pattern.forEach((s, i) =>
-  units.push({ b: bi, id: `${bi + 1}.${i + 1}`, i: i + 1, s, m2: 40 + ((i * 37 + bi * 23) % 160) })));
+const photos = ['1441986300917-64674bd600d8', '1472851294608-062f824d29cc', '1567401893414-76b7b1e5a7a5', '1604719312566-8912e9227c6a', '1528698827591-e19ccd7bc23d'];
+const photo = i => 'https://images.unsplash.com/photo-' + photos[i % photos.length] + '?auto=format&fit=crop&w=700&q=80';
+const pct = (v, t) => (v / t * 100).toFixed(3) + '%';
 
-let current = 0;
-const bt = $('#btabs');
-buildings.forEach((b, i) => {
-  const btn = document.createElement('button');
-  btn.textContent = b.name;
-  btn.onclick = () => { current = i; render(true); };
-  bt.appendChild(btn);
-});
+$('#ucards').innerHTML = units.map(u =>
+  '<button class="uc ' + u.s + '" data-id="' + u.id + '"><strong>' + u.name + '</strong><span class="tag">' + STATE[u.s] + '</span></button>').join('');
+$('#planimg').insertAdjacentHTML('beforeend', units.map(u => {
+  const [x1, y1, x2, y2] = u.r;
+  return '<button class="hot ' + u.s + '" data-id="' + u.id + '" aria-label="' + u.name + '" style="left:' + pct(x1, PW) + ';top:' + pct(y1, PH) + ';width:' + pct(x2 - x1, PW) + ';height:' + pct(y2 - y1, PH) + '"><span>' + (u.id === 'cv' ? 'CV' : u.id) + '</span></button>';
+}).join(''));
 
-function render(animate) {
-  const wrap = $('.plan-wrap');
-  const go = () => {
-    $$('#btabs button').forEach((b, i) => b.classList.toggle('on', i === current));
-    $('#bld-text').textContent = buildings[current].text;
-    const list = units.filter(u => u.b === current);
-    $('#ucards').innerHTML = list.map(u =>
-      `<div class="uc ${u.s}" data-id="${u.id}"><span class="n">${u.i}</span><strong>Local ${u.id}</strong><span class="tag">${names[u.s]}</span></div>`).join('');
-    $('#plan').innerHTML = list.map(u =>
-      `<div class="cell ${u.s}" data-id="${u.id}">${u.i}</div>`).join('');
-    $$('#ucards .uc, #plan .cell').forEach(el => {
-      el.addEventListener('mouseenter', () => link(el.dataset.id, true));
-      el.addEventListener('mouseleave', () => link(el.dataset.id, false));
-      el.addEventListener('click', () => { location.hash = ''; $('#contacto').scrollIntoView(); });
-    });
-    wrap.classList.remove('fade');
-  };
-  if (animate) { wrap.classList.add('fade'); setTimeout(go, 400); } else go();
+function select(id) {
+  const u = units.find(x => x.id === id);
+  $$('#ucards .uc, #planimg .hot').forEach(el => el.classList.toggle('on', el.dataset.id === id));
+  $('#uinfo').innerHTML =
+    '<div><small>Edificio Norte · Primer piso</small><h3>' + u.name + '</h3></div>' +
+    '<dl><div><dt>Estado</dt><dd class="st ' + u.s + '">' + STATE[u.s] + '</dd></div>' +
+    '<div><dt>Superficie</dt><dd>' + (u.area || 'Consultar') + '</dd></div>' +
+    '<div><dt>Uso</dt><dd>Retail</dd></div></dl>' +
+    (u.s === 'a' ? '<a class="pill sm" href="#contacto"><em>Consultar este local</em><em>Consultar este local</em></a>' : '') +
+    '<a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>';
+  $('#uinfo').classList.remove('pop'); void $('#uinfo').offsetWidth; $('#uinfo').classList.add('pop');
 }
-function link(id, on) {
-  $$(`[data-id="${id}"]`).forEach(e => e.classList.toggle('hl', on));
-}
-render(false);
-
-/* 3D tilt on plan */
-const p3 = $('.plan3d'), plan = $('#plan');
-p3.addEventListener('mousemove', e => {
-  const r = p3.getBoundingClientRect();
-  const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-  plan.style.transform = `rotateX(${22 - y * 12}deg) rotateZ(${-x * 14}deg)`;
+function link(id, on) { $$('[data-id="' + id + '"]').forEach(el => el.classList.toggle('hl', on)); }
+$$('#ucards .uc, #planimg .hot').forEach(el => {
+  el.addEventListener('click', () => select(el.dataset.id));
+  el.addEventListener('mouseenter', () => link(el.dataset.id, true));
+  el.addEventListener('mouseleave', () => link(el.dataset.id, false));
 });
-p3.addEventListener("mouseleave", () => plan.style.transform = "rotateX(22deg)");
-plan.style.transform = "rotateX(22deg)";
-plan.style.transformOrigin = 'center';
+select(units[0].id);
 
 /* tilt on images */
 $$('.tilt').forEach(img => {
   img.addEventListener('mousemove', e => {
     const r = img.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-    img.style.transform = `perspective(800px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) scale(1.03)`;
+    img.style.transform = 'perspective(800px) rotateY(' + (x * 10) + 'deg) rotateX(' + (-y * 10) + 'deg) scale(1.03)';
   });
   img.addEventListener('mouseleave', () => img.style.transform = '');
 });
 
-/* unit cards */
-const UNIT_IMGS = ["https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80","https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80"];
+/* available units */
 const avail = units.filter(u => u.s === 'a');
 let shown = 0;
 function more() {
   avail.slice(shown, shown + 4).forEach((u, k) => $('#cards').insertAdjacentHTML('beforeend',
-    `<div class="card" style="--d:${k * .1}s"><img src="${UNIT_IMGS[(shown + k) % UNIT_IMGS.length]}" alt=""><small>${buildings[u.b].name}</small><h3>Local ${u.id}</h3><p>Uso: Retail</p><p>Superficie: ${u.m2} m²</p><p>Precio: Consultar</p><a class="pill sm ink" href="#contacto"><em>Detalles</em><em>Detalles</em></a><a class="pill sm ink" href="#contacto"><em>Consultar</em><em>Consultar</em></a></div>`));
+    '<div class="card" style="--d:' + (k * .1) + 's"><img src="' + photo(shown + k) + '" alt=""><small>Edificio Norte · Primer piso</small><h3>' + u.name + '</h3><p>Uso: Retail</p><p>Superficie: ' + (u.area || 'Consultar') + '</p><p>Precio: Consultar</p><a class="pill sm ink" href="#plano" data-go="' + u.id + '"><em>Ver en plano</em><em>Ver en plano</em></a><a class="pill sm ink" href="#contacto"><em>Consultar</em><em>Consultar</em></a></div>'));
   shown += 4;
   if (shown >= avail.length) $('#more').hidden = true;
+  $$('[data-go]').forEach(el => el.onclick = () => select(el.dataset.go));
 }
 more();
 $('#more').onclick = more;

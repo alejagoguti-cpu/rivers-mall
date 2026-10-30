@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css?v=25">
+<link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 <div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
@@ -93,19 +93,17 @@
 </section>
 
 <section class="dark" id="plano">
-  <p class="eyebrow rv">Locales</p>
+  <p class="eyebrow rv">Edificio Norte · Primer piso</p>
   <h2 class="serif huge rv" style="--d:.1s">Donde tu marca pertenece</h2>
-  <p class="lead rv" style="--d:.2s">Desde unidades compactas hasta grandes formatos, Rivers Mall ofrece distintas oportunidades comerciales. Explora el plano y encuentra el espacio ideal.</p>
-  <div class="toggle rv" style="--d:.3s">
-    <button class="pill sm on" data-t="Retail"><em>Retail</em><em>Retail</em></button>
-    <button class="pill sm" data-t="Oficinas"><em>Oficinas</em><em>Oficinas</em></button>
-    <button class="pill sm ghost" id="filter"><em>Filtrar</em><em>Filtrar</em></button>
-  </div>
-  <div class="btabs rv" id="btabs" style="--d:.4s"></div>
-  <p class="lead sm" id="bld-text"></p>
-  <div class="plan-wrap">
+  <p class="lead rv" style="--d:.2s">Explora el plano del primer piso y presiona cada área para ver su detalle, estado y superficie.</p>
+  <div class="plan-wrap rv" style="--d:.3s">
     <div class="ucards" id="ucards"></div>
-    <div class="plan3d"><div class="plan" id="plan"></div></div>
+    <div class="planbox">
+      <div class="planimg" id="planimg">
+        <img src="assets/plano-rot.png" alt="Plano del primer piso, Edificio Norte" width="668" height="638">
+      </div>
+      <div class="uinfo" id="uinfo"></div>
+    </div>
   </div>
   <div class="legend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
   <div class="cta-row">
@@ -175,6 +173,6 @@
 </footer>
 <a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=25"></script>
+<script src="script.js?v=27"></script>
 </body>
 </html>
