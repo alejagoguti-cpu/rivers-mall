@@ -1,11 +1,15 @@
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-/* loader + initial animations */
-window.addEventListener('load', () => setTimeout(() => {
+/* loader + initial animations (never wait more than 2.5s for slow images) */
+let started = false;
+function start() {
+  if (started) return; started = true;
   $('#loader').classList.add('done');
   document.body.classList.add('loaded');
-}, 700));
+}
+window.addEventListener('load', () => setTimeout(start, 500));
+setTimeout(start, 2500);
 
 /* scroll reveal */
 const io = new IntersectionObserver(es => es.forEach(e => {
