@@ -328,3 +328,9 @@ button.uc{font:inherit;color:#fff;cursor:pointer;background:rgba(255,255,255,.03
 .su:hover circle,.su.hl circle,.su.on circle,.su:focus-visible circle{opacity:1;transform:scale(1)}
 .su:hover text,.su.hl text,.su.on text,.su:focus-visible text{opacity:1}
 .su.on{animation:unit-flash 1.1s ease}
+
+/* PDF-based plan */
+.planimg .p-rooms{fill:#222c30}
+.planimg .p-poche{fill:#5c6c73}
+.planimg .p-walls{fill:none;stroke:#aebcc2;stroke-width:.5;stroke-linejoin:round}
+.su rect{stroke-width:1.2}

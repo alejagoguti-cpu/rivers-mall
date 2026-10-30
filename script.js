@@ -98,44 +98,35 @@ const pct = (v, t) => (v / t * 100).toFixed(3) + '%';
 
 $('#ucards').innerHTML = units.map(u =>
   '<button class="uc ' + u.s + '" data-id="' + u.id + '"><strong>' + u.name + '</strong><span class="tag">' + STATE[u.s] + '</span></button>').join('');
-/* vector plan traced from the CAD drawing (orig coords 638x668, rotated 90deg clockwise into 668x638) */
-const rot = (x, y) => [PH + 30 - y, x];
-const poly = pts => pts.map(([x, y]) => rot(x, y).join(',')).join(' ');
-const rect = (x1, y1, x2, y2, extra = '') => {
-  const [ax, ay] = rot(x1, y1), [bx, by] = rot(x2, y2);
-  return '<rect x="' + Math.min(ax, bx) + '" y="' + Math.min(ay, by) + '" width="' + Math.abs(bx - ax) + '" height="' + Math.abs(by - ay) + '" ' + extra + '/>';
+/* plan: real vectors from the Revit PDF (assets/plano-base.svg, already rotated 90deg clockwise: viewBox 750x615) */
+const PDF = { Y1: 3180, X0: -390 };
+const toPlan = ([x1, y1, x2, y2]) => [PDF.Y1 - y2, x1 - PDF.X0, y2 - y1, x2 - x1]; // x, y, w, h
+const geo = {
+  '5': [-316, 2741, -161, 2792], '6': [-316, 2794, -161, 2844], '7': [-316, 2846, -161, 2896], '8': [-316, 2898, -161, 2948],
+  '1': [-160, 3001, -110, 3157], '2': [-107, 3001, -58, 3157], '3': [-56, 3001, -6, 3157], '4': [-3, 3001, 47, 3157],
+  'cv': [50, 3001, 205, 3157],
 };
-const footprint = [
-  [[68, 58], [330, 58], [378, 196], [378, 232], [68, 232]],
-  [[68, 232], [258, 232], [258, 457], [68, 457]],
-  [[68, 457], [480, 457], [480, 570], [68, 570]],
-  [[258, 232], [295, 232], [295, 457], [258, 457]],
-];
-let svg = '<svg viewBox="0 0 ' + PW + ' ' + PH + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano del primer piso, Edificio Norte">';
-svg += '<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#4a585f" stroke-width="1"/></pattern></defs>';
-/* lot boundary */
-svg += '<polyline class="lotline" points="' + poly([[330, 58], [378, 196], [420, 290], [500, 345], [488, 430], [480, 570]]) + '"/>';
-/* building mass */
-footprint.forEach(p => svg += '<polygon class="mass" points="' + poly(p) + '"/>');
-/* non-commercial areas */
-svg += rect(68, 58, 330, 118, 'class="zone hatch"');
-svg += rect(105, 118, 295, 190, 'class="zone"');
-svg += rect(68, 196, 378, 232, 'class="circ"') + rect(218, 232, 258, 457, 'class="circ"') + rect(258, 232, 295, 420, 'class="circ"') + rect(258, 420, 368, 457, 'class="circ"');
-svg += rect(80, 205, 213, 260, 'class="court"');
-svg += rect(68, 420, 218, 457, 'class="zone hatch"');
-/* plaza void + trees */
-svg += '<polygon class="void" points="' + poly([[295, 232], [378, 232], [420, 290], [500, 345], [488, 430], [368, 457], [295, 420]]) + '"/>';
-[[432, 295], [428, 338], [447, 346]].forEach(([x, y]) => { const [cx, cy] = rot(x, y); svg += '<circle class="tree" cx="' + cx + '" cy="' + cy + '" r="8"/>'; });
-{ const [tx, ty] = rot(360, 335); svg += '<text class="ztxt" x="' + tx + '" y="' + ty + '" text-anchor="middle">PLAZA</text>'; }
-{ const [tx, ty] = rot(146, 232); svg += '<text class="ztxt" x="' + tx + '" y="' + ty + '" text-anchor="middle">CANCHA</text>'; }
-/* sale units */
-units.forEach(u => {
-  const [x1, y1, x2, y2] = u.r;
-  svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '"><rect x="' + x1 + '" y="' + y1 + '" width="' + (x2 - x1) + '" height="' + (y2 - y1) + '"/>' +
-    '<circle cx="' + ((x1 + x2) / 2) + '" cy="' + ((y1 + y2) / 2) + '" r="10"/><text x="' + ((x1 + x2) / 2) + '" y="' + ((y1 + y2) / 2 + 4) + '" text-anchor="middle">' + (u.id === 'cv' ? 'CV' : u.id) + '</text></g>';
-});
-svg += '</svg>';
-$('#planimg').innerHTML = svg;
+function drawPlan(base) {
+  let svg = '<svg viewBox="0 0 750 615" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano del primer piso, Edificio Norte">' + base;
+  units.forEach(u => {
+    const [x, y, w, h] = toPlan(geo[u.id]);
+    const cx = x + w / 2, cy = y + h / 2;
+    svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '"><rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"/>' +
+      '<circle cx="' + cx + '" cy="' + cy + '" r="11"/><text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + (u.id === 'cv' ? 'CV' : u.id) + '</text></g>';
+  });
+  $('#planimg').innerHTML = svg + '</svg>';
+  $$('#ucards .uc, #planimg .su').forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); } });
+    el.addEventListener('click', () => select(el.dataset.id));
+    el.addEventListener('mouseenter', () => link(el.dataset.id, true));
+    el.addEventListener('mouseleave', () => link(el.dataset.id, false));
+  });
+  select(units[0].id);
+}
+fetch('assets/plano-base.svg').then(r => r.text()).then(t => {
+  const open = t.indexOf('>') + 1, close = t.lastIndexOf('</svg>');
+  drawPlan(t.slice(open, close));
+}).catch(() => drawPlan(''));
 
 function select(id) {
   const u = units.find(x => x.id === id);
@@ -150,13 +141,6 @@ function select(id) {
   $('#uinfo').classList.remove('pop'); void $('#uinfo').offsetWidth; $('#uinfo').classList.add('pop');
 }
 function link(id, on) { $$('[data-id="' + id + '"]').forEach(el => el.classList.toggle('hl', on)); }
-$$('#ucards .uc, #planimg .su').forEach(el => {
-  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); } });
-  el.addEventListener('click', () => select(el.dataset.id));
-  el.addEventListener('mouseenter', () => link(el.dataset.id, true));
-  el.addEventListener('mouseleave', () => link(el.dataset.id, false));
-});
-select(units[0].id);
 
 /* tilt on images */
 $$('.tilt').forEach(img => {
