@@ -36,24 +36,34 @@ addEventListener('scroll', () => {
 $('#burger').onclick = () => { $('#burger').classList.toggle('open'); $('#drawer').classList.toggle('open'); };
 $$('#drawer a').forEach(a => a.addEventListener('click', () => { $('#burger').classList.remove('open'); $('#drawer').classList.remove('open'); }));
 
-/* map list */
+/* map: Leaflet + CARTO dark tiles, centred on the project */
+const HOME = [7.880597377317534, -72.48866796931321];
+const map = L.map('map', { center: HOME, zoom: 15, zoomControl: false, scrollWheelZoom: false });
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19, subdomains: 'abcd',
+  attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+}).addTo(map);
+map.on('click', () => map.scrollWheelZoom.enable());
+map.on('mouseout', () => map.scrollWheelZoom.disable());
+const label = (txt, cls = '') => L.divIcon({ className: 'mk ' + cls, html: `<i></i><b>${txt}</b>`, iconSize: [0, 0] });
+L.marker(HOME, { icon: label('Rivers Mall', 'main'), zIndexOffset: 1000 }).addTo(map);
+
+/* Category points are placeholders (offsets from the project): replace with real places */
+const off = (dy, dx) => [HOME[0] + dy, HOME[1] + dx];
 const places = [
-  [['Centro', 30, 40], ['Mall Norte', 70, 30], ['Plaza', 60, 70], ['Terminal', 25, 72]],
-  [['Estación 1', 35, 35], ['Estación 2', 68, 62], ['Terminal', 20, 70]],
-  [['Mercado Central', 30, 30], ['Mercado Sur', 72, 70]],
-  [['Parque Norte', 70, 28], ['Parque Río', 28, 68], ['Bosque', 75, 72]],
-  [['Teatro', 32, 32], ['Museo', 66, 38], ['Galería', 50, 78]],
-  [['Universidad A', 28, 36], ['Universidad B', 74, 60], ['Instituto', 40, 78]],
+  [['Locales', off(.0020, .0025)], ['Zona comercial', off(-.0025, -.0030)]],
+  [['Transporte', off(.0030, -.0035)], ['Parada de bus', off(-.0020, .0035)]],
+  [['Mercado', off(.0018, -.0040)], ['Plaza de mercado', off(-.0030, .0020)]],
+  [['Parque', off(.0035, .0020)], ['Zona verde', off(-.0015, -.0045)]],
+  [['Cultura', off(.0025, -.0020)], ['Centro cultural', off(-.0028, .0030)]],
+  [['Universidad', off(.0030, .0040)], ['Instituto', off(-.0022, -.0025)]],
 ];
+const layer = L.layerGroup().addTo(map);
 function drawMap(i) {
-  $$('#map .pin:not(.main)').forEach(p => p.remove());
-  places[i].forEach(([n, x, y], k) => {
-    const p = document.createElement('span');
-    p.className = 'pin';
-    p.style.cssText = `left:${x}%;top:${y}%;animation-delay:${k * .12}s`;
-    p.innerHTML = `<b>${n}</b>`;
-    $('#map').appendChild(p);
-  });
+  layer.clearLayers();
+  places[i].forEach(([n, ll], k) => setTimeout(() => L.marker(ll, { icon: label(n) }).addTo(layer), k * 150));
+  map.flyTo(HOME, 15.5, { duration: 1.2 });
 }
 drawMap(0);
 $$('#loc-list li').forEach(li => li.onclick = () => {
