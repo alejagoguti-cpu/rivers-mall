@@ -201,3 +201,4 @@ footer p{font-size:13px}
 .sword{position:absolute;left:0;right:0;top:50%;text-align:center;font:300 clamp(54px,12vw,190px)/1 "Cormorant Garamond",serif;letter-spacing:.02em;text-transform:uppercase;color:#1c2b2b;opacity:0;transform:translateY(-35%) scale(.92);transition:opacity .7s var(--ease),transform .9s var(--ease);pointer-events:none}
 .sword:not(.w0){color:#eaffc0;text-shadow:0 2px 30px rgba(0,0,0,.18)}
 .stage[data-step="0"] .w0,.stage[data-step="1"] .w1,.stage[data-step="2"] .w2,.stage[data-step="3"] .w3{opacity:1;transform:translateY(-50%) scale(1)}
+html{overflow-x:hidden}.logo img{max-width:none}
