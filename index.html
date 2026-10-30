@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rivers Mall | Locales comerciales en arriendo</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#">Rivers<span>Mall</span></a>
+  <nav><a href="#ubicacion">Ubicación</a><a href="#plano">Plano</a><a href="#unidades">Locales</a><a href="#vecinos">Vecinos</a><a class="btn small" href="#contacto">Contáctanos</a></nav>
+</header>
+
+<section class="hero">
+  <div>
+    <h1>Locales comerciales<br>en arriendo</h1>
+    <p>Rivers Mall ofrece locales de retail, ocio y servicios en un entorno con miles de visitantes cada semana.</p>
+    <a class="btn" href="#plano">Ver locales</a>
+    <a class="btn ghost" href="#unidades">Unidades disponibles</a>
+  </div>
+</section>
+
+<section id="ubicacion" class="block">
+  <h2>Ubicados para rendir</h2>
+  <p class="lead">A pocos minutos del transporte público y de las principales zonas de la ciudad.</p>
+  <div class="tabs" data-group="loc">
+    <button class="active" data-tab="t1">Locales</button><button data-tab="t2">Transporte</button>
+    <button data-tab="t3">Mercados</button><button data-tab="t4">Zonas verdes</button>
+    <button data-tab="t5">Cultura</button><button data-tab="t6">Universidades</button>
+  </div>
+  <div id="loc-panel" class="panel">Locales de moda, comida, salud y servicios en un solo lugar.</div>
+</section>
+
+<section id="plano" class="block alt">
+  <h2>Donde tu marca pertenece</h2>
+  <p class="lead">Desde locales compactos hasta grandes formatos. Explora el plano y encuentra el espacio ideal.</p>
+  <div class="tabs" data-group="bld">
+    <button class="active" data-b="Torre Norte">Torre Norte</button>
+    <button data-b="Plaza Central">Plaza Central</button>
+    <button data-b="Edificio Río">Edificio Río</button>
+  </div>
+  <div id="plan" class="plan"></div>
+  <p class="legend"><i class="dot a"></i>Disponible <i class="dot o"></i>Ocupado <i class="dot c"></i>Próximamente</p>
+  <a class="btn" href="#contacto">Consultar</a>
+  <a class="btn ghost dark" href="#">Descargar brochure</a>
+</section>
+
+<section id="unidades" class="block">
+  <h2>Elige tu espacio ideal</h2>
+  <p class="lead">Tamaños, uso y precio de las unidades actuales.</p>
+  <div id="cards" class="cards"></div>
+  <button id="more" class="btn ghost dark">Cargar más</button>
+</section>
+
+<section id="vecinos" class="block alt">
+  <h2>Conoce a tus vecinos</h2>
+  <p class="lead">Un entorno con comida, cultura y creatividad. Explora el barrio que rodea Rivers Mall.</p>
+  <a class="btn" href="#">Saber más</a>
+</section>
+
+<section id="contacto" class="block">
+  <h2>Contáctanos</h2>
+  <form id="form">
+    <fieldset><legend>Tus datos</legend>
+      <input required placeholder="Nombre*"><input required placeholder="Apellido*">
+      <input required type="tel" placeholder="Teléfono*"><input required type="email" placeholder="Email*">
+    </fieldset>
+    <fieldset><legend>Tu negocio</legend>
+      <input required placeholder="Empresa*">
+      <select required><option value="">Tipo de negocio*</option><option>Comida y bebida</option><option>Moda y retail</option><option>Salud y belleza</option><option>Fitness y bienestar</option><option>Servicios</option><option>Otro</option></select>
+      <input type="url" placeholder="Sitio web (opcional)">
+    </fieldset>
+    <fieldset><legend>Requerimientos</legend>
+      <select required><option value="">Tamaño preferido*</option><option>Menos de 50 m²</option><option>50–100 m²</option><option>Más de 100 m²</option><option>Flexible</option></select>
+      <select required><option value="">¿Cómo nos conociste?*</option><option>Redes sociales</option><option>Buscador</option><option>Referido</option><option>Publicidad online</option><option>Publicidad exterior</option><option>Otro</option></select>
+      <textarea placeholder="Mensaje (opcional)"></textarea>
+    </fieldset>
+    <button class="btn" type="submit">Enviar consulta</button>
+    <p id="ok" hidden>¡Gracias! Te contactaremos pronto.</p>
+  </form>
+</section>
+
+<footer>
+  <div><b>Dirección</b><br>Por definir</div>
+  <div><b>Llámanos</b><br>000 000 0000</div>
+  <div><b>Horario</b><br>Lun–Vie 8:00–20:00<br>Sáb–Dom 9:00–17:00</div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
