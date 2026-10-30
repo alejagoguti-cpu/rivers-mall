@@ -4,7 +4,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 /* loader + initial animations */
 window.addEventListener('load', () => setTimeout(() => {
   $('#loader').classList.add('done');
-  document.body.classList.add('ready');
+  document.body.classList.add('loaded');
 }, 700));
 
 /* scroll reveal */
