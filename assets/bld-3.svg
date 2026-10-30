@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+<rect width="100%" height="100%" fill="#cfdde0"/>
+<path d="M0 0L1000 600M1000 0L0 600" stroke="#b3c7cb" stroke-width="2"/>
+<text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="67" fill="#4a6469">Edificio Rio - 1000x600</text>
+</svg>
