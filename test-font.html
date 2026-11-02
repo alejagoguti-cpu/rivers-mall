@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Cormorant+Garamond:wght@300;600&display=swap" rel="stylesheet">
+<style>
+body { background: #2f363c; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 70px; font-weight: 800; padding: 20px; }
+.label { font-size: 14px; color: #aaa; margin-top: 20px; font-family: sans-serif; }
+/* Current broken */
+.test1 { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.85); }
+/* Option A: Solid elegant luxury watermark */
+.test2 { color: rgba(255,255,255,0.18); letter-spacing: 0.08em; }
+/* Option B: Clean solid white */
+.test3 { color: rgba(255,255,255,0.85); letter-spacing: 0.05em; font-weight: 700; }
+/* Option C: SVG text with vector-effect: non-scaling-stroke / merged outline */
+.test4 text { font-family: Montserrat; font-weight: 800; font-size: 70px; fill: none; stroke: rgba(255,255,255,0.85); stroke-width: 1.5; }
+/* Option D: Serif elegant Cormorant */
+.test5 { font-family: 'Cormorant Garamond', serif; font-weight: 600; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+<div class="label">1. Actual (stroke on Montserrat with internal glyph overlaps):</div>
+<div class="test1">CÚCUTA RIVERS</div>
+
+<div class="label">2. Elegant Watermark (Solid fill with low opacity, no inner overlapping seams):</div>
+<div class="test2">CÚCUTA RIVERS</div>
+
+<div class="label">3. Solid Semi-White (Clean, modern luxury marquee):</div>
+<div class="test3">CÚCUTA RIVERS</div>
+
+<div class="label">4. Cormorant Garamond Serif:</div>
+<div class="test5">CÚCUTA RIVERS</div>
+</body>
+</html>
