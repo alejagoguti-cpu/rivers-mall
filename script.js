@@ -420,66 +420,186 @@ function renderLevel(lvlKey, targetUnitId = null) {
   if ($('#planEyebrow')) $('#planEyebrow').textContent = lvl.eyebrow;
   if ($('#planTitle')) $('#planTitle').textContent = lvl.title;
   if ($('#planLead')) $('#planLead').textContent = lvl.lead;
+  if ($('#unitsCount')) $('#unitsCount').textContent = currentUnits.length + ' unidades';
 
   // Render left unit cards
-  $('#ucards').innerHTML = currentUnits.map(u =>
-    '<button class="uc ' + u.s + '" data-id="' + u.id + '"><strong>' + u.name + '</strong><span class="tag">' + STATE[u.s] + '</span></button>'
-  ).join('');
+  $('#ucards').innerHTML = currentUnits.map(u => `
+    <button class="uc ${u.s}" data-id="${u.id}">
+      <div class="uc-top">
+        <strong>${u.name}</strong>
+        <span class="tag">${STATE[u.s]}</span>
+      </div>
+      <div class="uc-bottom">
+        <span>${u.area || 'Consultar'}</span>
+        <span class="uc-btn-hint">✦ Ver 3D & Plano ↗</span>
+      </div>
+    </button>
+  `).join('');
 
   // Render floor plan SVG
   $('#planimg').innerHTML = lvl.getSvg(currentUnits);
 
-  // Bind interactive events
+  // Bind interactive events for cards and SVG rooms
   $$('#ucards .uc, #planimg .su').forEach(el => {
     el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(el.dataset.id); }
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openUnitModal(el.dataset.id);
+      }
     });
-    el.addEventListener('click', () => select(el.dataset.id));
+    el.addEventListener('click', () => {
+      openUnitModal(el.dataset.id);
+    });
     el.addEventListener('mouseenter', () => link(el.dataset.id, true));
     el.addEventListener('mouseleave', () => link(el.dataset.id, false));
   });
 
-  // Select initial space
+  // Highlight initial space on plan
   const selectId = targetUnitId && currentUnits.some(u => u.id === targetUnitId) ? targetUnitId : currentUnits[0].id;
-  select(selectId);
+  highlightUnit(selectId);
+
+  // If explicitly requested via data-go, also open the modal
+  if (targetUnitId) {
+    openUnitModal(targetUnitId);
+  }
 }
 
-function select(id) {
-  const u = currentUnits.find(x => x.id === id);
-  if (!u) return;
-
+function highlightUnit(id) {
   $$('#ucards .uc, #planimg .su').forEach(el => el.classList.toggle('on', el.dataset.id === id));
-
-  const lvl = LEVELS[activeLevel];
-  let photoHtml = '';
-  if (u.photo) {
-    photoHtml = '<div class="uinfo-photo"><img src="' + u.photo + '" alt="' + u.name + '"></div>';
-  }
-
-  $('#uinfo').innerHTML =
-    photoHtml +
-    '<div class="uinfo-body">' +
-      '<div class="uinfo-head"><small>' + lvl.eyebrow + '</small><h3>' + u.name + '</h3></div>' +
-      '<dl>' +
-        '<div><dt>Estado</dt><dd class="st ' + u.s + '">' + STATE[u.s] + '</dd></div>' +
-        '<div><dt>Superficie</dt><dd>' + (u.area || 'Consultar') + '</dd></div>' +
-        '<div><dt>Uso</dt><dd>' + (u.use || 'Retail') + '</dd></div>' +
-      '</dl>' +
-      (u.desc ? '<p class="uinfo-desc">' + u.desc + '</p>' : '') +
-      '<div class="uinfo-actions">' +
-        (u.s === 'a' ? '<a class="pill sm" href="#contacto"><em>Consultar este espacio</em><em>Consultar este espacio</em></a>' : '') +
-        '<a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>' +
-      '</div>' +
-    '</div>';
-
-  $('#uinfo').classList.remove('pop');
-  void $('#uinfo').offsetWidth;
-  $('#uinfo').classList.add('pop');
 }
 
 function link(id, on) {
   $$('[data-id="' + id + '"]').forEach(el => el.classList.toggle('hl', on));
 }
+
+function openUnitModal(id) {
+  const u = currentUnits.find(x => x.id === id);
+  if (!u) return;
+
+  highlightUnit(id);
+
+  const lvl = LEVELS[activeLevel];
+  if ($('#umEyebrow')) $('#umEyebrow').textContent = lvl.eyebrow;
+  if ($('#umTitle')) $('#umTitle').textContent = u.name;
+
+  if ($('#umStateBadge')) {
+    $('#umStateBadge').className = 'um-state-badge ' + u.s;
+    $('#umStateBadge').textContent = STATE[u.s];
+  }
+  if ($('#umAreaBadge')) $('#umAreaBadge').textContent = u.area || 'Consultar superficie';
+  if ($('#umAreaVal')) $('#umAreaVal').textContent = u.area || 'Consultar';
+
+  const defaultUse = activeLevel === 'oficinas' ? 'Oficinas / Corporativo' :
+                     activeLevel === 'sotano' ? 'Parqueadero & Servicios' : 'Retail / Comercio';
+  if ($('#umUse')) $('#umUse').textContent = u.use || defaultUse;
+
+  if ($('#umHeightVal')) {
+    $('#umHeightVal').textContent = activeLevel === 'sotano' ? '3,60 m altura libre' :
+                                    activeLevel === 'oficinas' ? '3,80 m altura libre' : '4,20 m (Apto Mezzanine)';
+  }
+  if ($('#umFacadeVal')) {
+    $('#umFacadeVal').textContent = activeLevel === 'oficinas' ? 'Ventanal panorámico continuo' :
+                                    activeLevel === 'sotano' ? 'Acceso vehicular y peatonal' : 'Vitrina piso a techo';
+  }
+
+  if ($('#umDesc')) {
+    $('#umDesc').textContent = u.desc || (u.name + ' ubicado en ' + lvl.eyebrow + '. Espacio comercial estratégico con excelente visibilidad y flujo peatonal constante dentro del complejo Rivers Mall Cúcuta.');
+  }
+
+  if ($('#umPhotoImg')) {
+    const fallbackPhoto = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=900&q=80';
+    $('#umPhotoImg').src = u.photo || fallbackPhoto;
+    $('#umPhotoImg').alt = u.name;
+  }
+
+  if ($('#u3dBadge')) {
+    $('#u3dBadge').textContent = u.name.replace('Local ', 'L').replace('Oficina ', 'OF-');
+  }
+
+  if ($('#umPlanWrap')) {
+    // Show architectural plan highlighting current unit
+    $('#umPlanWrap').innerHTML = lvl.getSvg(currentUnits);
+    const activeEl = $('#umPlanWrap [data-id="' + id + '"]');
+    if (activeEl) activeEl.classList.add('on');
+  }
+
+  // Switch to default 3D tab
+  switchUmTab('3d');
+
+  const modal = $('#unitModal');
+  if (modal) {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeUnitModal() {
+  const modal = $('#unitModal');
+  if (modal) {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+}
+
+function switchUmTab(viewName) {
+  $$('.um-tab').forEach(t => t.classList.toggle('on', t.dataset.view === viewName));
+  if ($('#umView3D')) $('#umView3D').classList.toggle('on', viewName === '3d');
+  if ($('#umViewPhoto')) $('#umViewPhoto').classList.toggle('on', viewName === 'photo');
+  if ($('#umViewPlan')) $('#umViewPlan').classList.toggle('on', viewName === 'plan');
+}
+
+// Setup Unit Modal Event Handlers
+(() => {
+  const closeBtn = $('#unitModalClose');
+  const overlay = $('#unitModalOverlay');
+  if (closeBtn) closeBtn.onclick = closeUnitModal;
+  if (overlay) overlay.onclick = closeUnitModal;
+
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeUnitModal();
+  });
+
+  // Tab switching inside modal
+  $$('.um-tab').forEach(t => {
+    t.addEventListener('click', () => switchUmTab(t.dataset.view));
+  });
+
+  // Interactive 3D Perspective rotation on mousemove / touchmove
+  const stage3d = $('#um3dStage');
+  const box3d = $('#um3dBox');
+  if (stage3d && box3d) {
+    stage3d.addEventListener('mousemove', e => {
+      const rect = stage3d.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const rx = 25 - (y * 36);
+      const ry = -25 + (x * 46);
+      box3d.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+    });
+
+    stage3d.addEventListener('mouseleave', () => {
+      box3d.style.transform = 'rotateX(25deg) rotateY(-25deg)';
+    });
+
+    stage3d.addEventListener('touchmove', e => {
+      if (!e.touches.length) return;
+      const touch = e.touches[0];
+      const rect = stage3d.getBoundingClientRect();
+      const x = (touch.clientX - rect.left) / rect.width - 0.5;
+      const y = (touch.clientY - rect.top) / rect.height - 0.5;
+      const rx = 25 - (y * 36);
+      const ry = -25 + (x * 46);
+      box3d.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+    }, { passive: true });
+  }
+
+  const contactBtn = $('#umContactBtn');
+  if (contactBtn) {
+    contactBtn.addEventListener('click', () => closeUnitModal());
+  }
+})();
 
 // Bind level selector tabs
 $$('#levelTabs .ltab').forEach(b => {

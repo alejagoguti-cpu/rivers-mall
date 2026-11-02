@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css?v=53">
+<link rel="stylesheet" href="styles.css?v=54">
 </head>
 <body>
 <div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
@@ -204,8 +204,8 @@
 </section>
 
 <section class="dark" id="plano">
-  <!-- Cabecera compacta integrada: Selector de Nivel + Títulos + Leyenda -->
-  <div class="plan-topbar rv">
+  <!-- Cabecera Espaciosa y Limpia -->
+  <div class="plan-head-wrap rv">
     <div class="level-tabs-wrap">
       <div class="level-tabs" id="levelTabs" role="tablist" aria-label="Seleccionar nivel a explorar">
         <button class="ltab" data-lvl="sotano" role="tab" aria-selected="false">
@@ -232,32 +232,34 @@
       </div>
     </div>
 
-    <div class="plan-header-meta">
-      <div class="plan-title-block">
-        <p class="eyebrow" id="planEyebrow">Edificio Norte · Primer piso</p>
-        <h2 class="serif plan-title-h2" id="planTitle">Donde tu marca pertenece</h2>
+    <div class="plan-header-center">
+      <p class="eyebrow" id="planEyebrow">Edificio Norte · Primer piso</p>
+      <h2 class="serif plan-main-title" id="planTitle">Donde tu marca pertenece</h2>
+      <p class="lead" id="planLead">Explora el plano interactivo. Presiona cualquier área para abrir su vista 3D interactiva, plano detallado y especificaciones completas.</p>
+      
+      <div class="legend-row">
+        <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
+        <span class="plan-click-hint">✦ Haz clic en cualquier local para abrir su 3D</span>
       </div>
-      <p class="lead sm plan-lead" id="planLead">Explora el plano interactivo y presiona cada área para ver su detalle, estado y superficie.</p>
-      <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
     </div>
   </div>
 
-  <div class="plan-wrap rv" style="--d:.2s">
-    <div class="plan-sidebar">
+  <div class="plan-workspace rv" style="--d:.2s">
+    <!-- Lista lateral de unidades (elegante, espaciosa, con botón para abrir 3D) -->
+    <div class="plan-units-col">
+      <div class="plan-units-header">
+        <span>Espacios del nivel</span>
+        <small id="unitsCount">9 unidades</small>
+      </div>
       <div class="ucards" id="ucards"></div>
-      <div class="uinfo" id="uinfo"></div>
     </div>
+
+    <!-- Plano arquitectónico protagonista con amplio espacio -->
     <div class="planbox">
       <div class="planimg" id="planimg">
         <img src="assets/plano-rot.png" alt="Plano interactivo" width="668" height="638">
       </div>
     </div>
-  </div>
-
-  <div class="cta-row compact-cta">
-    <b>¿Te interesa un espacio en este nivel?</b>
-    <a class="pill sm" href="#contacto"><em>Consultar</em><em>Consultar</em></a>
-    <a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>
   </div>
 </section>
 
@@ -320,7 +322,96 @@
   <div><h4>Horario</h4><p>Lun–Vie 8:00 – 20:00<br>Sáb–Dom 9:00 – 17:00</p></div>
 </footer>
 <a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
+
+<!-- Modal Popup: Vista 3D Interactivo, Render y Especificaciones del Espacio -->
+<div class="unit-modal" id="unitModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="unit-modal-overlay" id="unitModalOverlay"></div>
+  <div class="unit-modal-window">
+    <button class="unit-modal-close" id="unitModalClose" aria-label="Cerrar ventana">✕</button>
+    <div class="unit-modal-content">
+      <!-- Columna Visual: Selector 3D / Foto / Plano -->
+      <div class="um-visual-col">
+        <div class="um-tabs">
+          <button class="um-tab on" data-view="3d">✦ Modelo 3D</button>
+          <button class="um-tab" data-view="photo">📷 Render / Foto</button>
+          <button class="um-tab" data-view="plan">📐 Plano Detallado</button>
+        </div>
+        <div class="um-view-container">
+          <div class="um-view-panel on" id="umView3D">
+            <div class="um-3d-stage" id="um3dStage">
+              <div class="um-3d-box" id="um3dBox">
+                <div class="u3d-floor">
+                  <div class="u3d-grid"></div>
+                  <div class="u3d-glow-area" id="u3dGlow"></div>
+                </div>
+                <div class="u3d-wall u3d-wall-back"></div>
+                <div class="u3d-wall u3d-wall-left"></div>
+                <div class="u3d-pin" id="u3dPin">
+                  <span class="u3d-badge" id="u3dBadge">L5</span>
+                  <div class="u3d-pulse"></div>
+                </div>
+              </div>
+              <div class="um-3d-hint"><span>↻ Mueve el cursor o arrastra para rotar en 3D</span></div>
+            </div>
+          </div>
+          <div class="um-view-panel" id="umViewPhoto">
+            <div class="um-photo-wrap">
+              <img src="" alt="" id="umPhotoImg">
+            </div>
+          </div>
+          <div class="um-view-panel" id="umViewPlan">
+            <div class="um-plan-wrap" id="umPlanWrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna de Información y Datos -->
+      <div class="um-info-col">
+        <div class="um-header">
+          <small class="um-level-eyebrow" id="umEyebrow">Edificio Norte · Primer Piso</small>
+          <h3 class="serif um-title" id="umTitle">Local 5</h3>
+          <div class="um-badge-row">
+            <span class="um-state-badge a" id="umStateBadge">Disponible</span>
+            <span class="um-area-badge" id="umAreaBadge">105,53 m²</span>
+          </div>
+        </div>
+        <div class="um-specs-grid">
+          <div class="um-spec-item">
+            <span class="um-spec-label">Uso Destinado</span>
+            <strong class="um-spec-val" id="umUse">Retail / Comercio</strong>
+          </div>
+          <div class="um-spec-item">
+            <span class="um-spec-label">Superficie Total</span>
+            <strong class="um-spec-val" id="umAreaVal">105,53 m²</strong>
+          </div>
+          <div class="um-spec-item">
+            <span class="um-spec-label">Altura Libre</span>
+            <strong class="um-spec-val" id="umHeightVal">4,20 m (Apto Mezzanine)</strong>
+          </div>
+          <div class="um-spec-item">
+            <span class="um-spec-label">Fachada Comercial</span>
+            <strong class="um-spec-val" id="umFacadeVal">Vitrina piso a techo</strong>
+          </div>
+        </div>
+        <div class="um-desc-block">
+          <h4>Descripción del espacio</h4>
+          <p id="umDesc">Local comercial en corredor principal con doble vitrina de exposición y acceso directo desde la plaza peatonal.</p>
+        </div>
+        <div class="um-features">
+          <div class="um-feat"><i>✓</i><span>Punto hidrosanitario y acometida eléctrica independiente</span></div>
+          <div class="um-feat"><i>✓</i><span>Tráfico peatonal continuo frente a plaza central</span></div>
+          <div class="um-feat"><i>✓</i><span>Conexión para aire acondicionado y red contra incendios</span></div>
+        </div>
+        <div class="um-actions">
+          <a class="pill ink" id="umContactBtn" href="#contacto"><em>Consultar este local</em><em>Consultar este local</em></a>
+          <a class="pill ghost" href="assets/brochure.pdf" download><em>Descargar brochure técnico</em><em>Descargar brochure técnico</em></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=53"></script>
+<script src="script.js?v=54"></script>
 </body>
 </html>
