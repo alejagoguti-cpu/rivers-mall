@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css?v=51">
+<link rel="stylesheet" href="styles.css?v=52">
 </head>
 <body>
 <div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
@@ -204,48 +204,58 @@
 </section>
 
 <section class="dark" id="plano">
-  <!-- Selector de Nivel: Sótano, Primer Piso, Oficinas -->
-  <div class="level-tabs-wrap rv">
-    <div class="level-tabs" id="levelTabs" role="tablist" aria-label="Seleccionar nivel a explorar">
-      <button class="ltab" data-lvl="sotano" role="tab" aria-selected="false">
-        <span class="ltab-num">S</span>
-        <span class="ltab-info">
-          <strong>Sótano</strong>
-          <small>Parqueaderos & Gimnasio</small>
-        </span>
-      </button>
-      <button class="ltab on" data-lvl="primer-piso" role="tab" aria-selected="true">
-        <span class="ltab-num">01</span>
-        <span class="ltab-info">
-          <strong>Primer Piso</strong>
-          <small>Locales Comerciales</small>
-        </span>
-      </button>
-      <button class="ltab" data-lvl="oficinas" role="tab" aria-selected="false">
-        <span class="ltab-num">03</span>
-        <span class="ltab-info">
-          <strong>Oficinas</strong>
-          <small>Corporativo & Terraza</small>
-        </span>
-      </button>
+  <!-- Cabecera compacta integrada: Selector de Nivel + Títulos + Leyenda -->
+  <div class="plan-topbar rv">
+    <div class="level-tabs-wrap">
+      <div class="level-tabs" id="levelTabs" role="tablist" aria-label="Seleccionar nivel a explorar">
+        <button class="ltab" data-lvl="sotano" role="tab" aria-selected="false">
+          <span class="ltab-num">S</span>
+          <span class="ltab-info">
+            <strong>Sótano</strong>
+            <small>Parqueaderos & Gimnasio</small>
+          </span>
+        </button>
+        <button class="ltab on" data-lvl="primer-piso" role="tab" aria-selected="true">
+          <span class="ltab-num">01</span>
+          <span class="ltab-info">
+            <strong>Primer Piso</strong>
+            <small>Locales Comerciales</small>
+          </span>
+        </button>
+        <button class="ltab" data-lvl="oficinas" role="tab" aria-selected="false">
+          <span class="ltab-num">03</span>
+          <span class="ltab-info">
+            <strong>Oficinas</strong>
+            <small>Corporativo & Terraza</small>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="plan-header-meta">
+      <div class="plan-title-block">
+        <p class="eyebrow" id="planEyebrow">Edificio Norte · Primer piso</p>
+        <h2 class="serif plan-title-h2" id="planTitle">Donde tu marca pertenece</h2>
+      </div>
+      <p class="lead sm plan-lead" id="planLead">Explora el plano interactivo y presiona cada área para ver su detalle, estado y superficie.</p>
+      <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
     </div>
   </div>
 
-  <p class="eyebrow rv" id="planEyebrow">Edificio Norte · Primer piso</p>
-  <h2 class="serif huge rv" id="planTitle" style="--d:.1s">Donde tu marca pertenece</h2>
-  <p class="lead rv" id="planLead" style="--d:.2s">Explora el plano del primer piso y presiona cada área para ver su detalle, estado y superficie.</p>
-  <div class="plan-wrap rv" style="--d:.3s">
-    <div class="ucards" id="ucards"></div>
-    <div class="planbox">
-      <div class="planimg" id="planimg">
-        <img src="assets/plano-rot.png" alt="Plano del primer piso, Edificio Norte" width="668" height="638">
-      </div>
+  <div class="plan-wrap rv" style="--d:.2s">
+    <div class="plan-sidebar">
+      <div class="ucards" id="ucards"></div>
       <div class="uinfo" id="uinfo"></div>
     </div>
+    <div class="planbox">
+      <div class="planimg" id="planimg">
+        <img src="assets/plano-rot.png" alt="Plano interactivo" width="668" height="638">
+      </div>
+    </div>
   </div>
-  <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
-  <div class="cta-row">
-    <b>Ayuda a dar forma al nuevo destino de Cúcuta</b>
+
+  <div class="cta-row compact-cta">
+    <b>¿Te interesa un espacio en este nivel?</b>
     <a class="pill sm" href="#contacto"><em>Consultar</em><em>Consultar</em></a>
     <a class="pill sm" href="assets/brochure.pdf" download><em>Descargar brochure</em><em>Descargar brochure</em></a>
   </div>
@@ -311,6 +321,6 @@
 </footer>
 <a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=51"></script>
+<script src="script.js?v=52"></script>
 </body>
 </html>
