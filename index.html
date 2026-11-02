@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css?v=50">
+<link rel="stylesheet" href="styles.css?v=51">
 </head>
 <body>
 <div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
@@ -87,60 +87,107 @@
   </div>
 </section>
 
-<!-- Cinta Infinita de Marcas Confirmadas (Ara, D1, Cruz Verde) -->
-<section class="brands-strip" aria-label="Marcas confirmadas">
-  <div class="brands-strip-track">
-    <!-- Repetición A -->
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
+<!-- Carrusel Infinito de Marcas Confirmadas (Ara, D1, Cruz Verde) -->
+<section class="brands-section" id="marcas">
+  <div class="brands-head rv">
+    <p class="eyebrow">Marcas confirmadas</p>
+    <h2 class="serif">Grandes marcas ya eligieron Rivers Mall</h2>
+    <p class="lead sm">Cuentan con presencia confirmada dentro del proyecto comercial y corporativo.</p>
+  </div>
+  <div class="brands-carousel">
+    <div class="brands-track">
+      <!-- Repetición 1 -->
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas Ara</strong>
+          <small>Supermercado Ancla · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas D1</strong>
+          <small>Supermercado de Descuento · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="b-img"></div>
+        <div class="b-info">
+          <strong>Cruz Verde</strong>
+          <small>Droguería & Salud · Confirmado</small>
+        </div>
+      </div>
 
-    <!-- Repetición B (Bucle continuo -50%) -->
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
-    <div class="brand-item"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="brand-logo"></div>
-    <span class="brand-strip-sep">•</span>
+      <!-- Repetición 2 -->
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas Ara</strong>
+          <small>Supermercado Ancla · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas D1</strong>
+          <small>Supermercado de Descuento · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="b-img"></div>
+        <div class="b-info">
+          <strong>Cruz Verde</strong>
+          <small>Droguería & Salud · Confirmado</small>
+        </div>
+      </div>
+
+      <!-- Repetición 3 -->
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas Ara</strong>
+          <small>Supermercado Ancla · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas D1</strong>
+          <small>Supermercado de Descuento · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="b-img"></div>
+        <div class="b-info">
+          <strong>Cruz Verde</strong>
+          <small>Droguería & Salud · Confirmado</small>
+        </div>
+      </div>
+
+      <!-- Repetición 4 -->
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-ara.svg" alt="Tiendas Ara" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas Ara</strong>
+          <small>Supermercado Ancla · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-d1.svg" alt="Tiendas D1" class="b-img"></div>
+        <div class="b-info">
+          <strong>Tiendas D1</strong>
+          <small>Supermercado de Descuento · Confirmado</small>
+        </div>
+      </div>
+      <div class="brand-item">
+        <div class="b-logo-wrap"><img src="assets/logo-cruz-verde.svg" alt="Cruz Verde" class="b-img"></div>
+        <div class="b-info">
+          <strong>Cruz Verde</strong>
+          <small>Droguería & Salud · Confirmado</small>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -264,6 +311,6 @@
 </footer>
 <a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=50"></script>
+<script src="script.js?v=51"></script>
 </body>
 </html>
