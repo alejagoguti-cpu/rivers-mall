@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<link rel="stylesheet" href="styles.css?v=38">
+<link rel="stylesheet" href="styles.css?v=42">
 </head>
 <body>
 <div id="loader"><img src="assets/logo-mark.svg" alt=""></div>
@@ -18,7 +18,7 @@
   <div class="nav-l">
     <a class="pill sm" href="#intro"><em>Inicio</em><em>Inicio</em></a>
     <a class="pill sm" href="#ubicacion"><em>Ubicación</em><em>Ubicación</em></a>
-    <a class="pill sm" href="#plano"><em>Locales</em><em>Locales</em></a>
+    <a class="pill sm" href="#plano"><em>Niveles & Locales</em><em>Niveles & Locales</em></a>
     <a class="pill sm" href="#contacto"><em>Contacto</em><em>Contacto</em></a>
   </div>
   <a class="logo" href="#top" aria-label="Rivers Mall Cúcuta">
@@ -32,7 +32,7 @@
 </header>
 
 <aside id="drawer">
-  <a href="#intro">Rivers Mall</a><a href="#ubicacion">Ubicación</a><a href="#plano">Locales</a>
+  <a href="#intro">Rivers Mall</a><a href="#ubicacion">Ubicación</a><a href="#plano">Niveles & Locales</a>
   <a href="#unidades">Unidades</a><a href="#vecinos">Vecinos</a><a href="#contacto">Contacto</a>
   <a href="assets/brochure.pdf" download>Descargar brochure</a>
 </aside>
@@ -93,9 +93,36 @@
 </section>
 
 <section class="dark" id="plano">
-  <p class="eyebrow rv">Edificio Norte · Primer piso</p>
-  <h2 class="serif huge rv" style="--d:.1s">Donde tu marca pertenece</h2>
-  <p class="lead rv" style="--d:.2s">Explora el plano del primer piso y presiona cada área para ver su detalle, estado y superficie.</p>
+  <!-- Selector de Nivel: Sótano, Primer Piso, Oficinas -->
+  <div class="level-tabs-wrap rv">
+    <div class="level-tabs" id="levelTabs" role="tablist" aria-label="Seleccionar nivel a explorar">
+      <button class="ltab" data-lvl="sotano" role="tab" aria-selected="false">
+        <span class="ltab-num">S</span>
+        <span class="ltab-info">
+          <strong>Sótano</strong>
+          <small>Parqueaderos & Gimnasio</small>
+        </span>
+      </button>
+      <button class="ltab on" data-lvl="primer-piso" role="tab" aria-selected="true">
+        <span class="ltab-num">01</span>
+        <span class="ltab-info">
+          <strong>Primer Piso</strong>
+          <small>Locales Comerciales</small>
+        </span>
+      </button>
+      <button class="ltab" data-lvl="oficinas" role="tab" aria-selected="false">
+        <span class="ltab-num">03</span>
+        <span class="ltab-info">
+          <strong>Oficinas</strong>
+          <small>Corporativo & Terraza</small>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <p class="eyebrow rv" id="planEyebrow">Edificio Norte · Primer piso</p>
+  <h2 class="serif huge rv" id="planTitle" style="--d:.1s">Donde tu marca pertenece</h2>
+  <p class="lead rv" id="planLead" style="--d:.2s">Explora el plano del primer piso y presiona cada área para ver su detalle, estado y superficie.</p>
   <div class="plan-wrap rv" style="--d:.3s">
     <div class="ucards" id="ucards"></div>
     <div class="planbox">
@@ -105,7 +132,7 @@
       <div class="uinfo" id="uinfo"></div>
     </div>
   </div>
-  <div class="legend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
+  <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
   <div class="cta-row">
     <b>Ayuda a dar forma al nuevo destino de Cúcuta</b>
     <a class="pill sm" href="#contacto"><em>Consultar</em><em>Consultar</em></a>
@@ -173,6 +200,6 @@
 </footer>
 <a class="fab" href="assets/brochure.pdf" download>Descargar brochure</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=38"></script>
+<script src="script.js?v=42"></script>
 </body>
 </html>
