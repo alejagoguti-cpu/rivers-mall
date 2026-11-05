@@ -232,17 +232,17 @@
     <div class="plan-header-center">
       <p class="eyebrow" id="planEyebrow">Edificio Norte · Primer piso</p>
       <h2 class="serif plan-main-title" id="planTitle">Donde tu marca pertenece</h2>
-      <p class="lead" id="planLead">Explora el plano interactivo. Presiona cualquier área para abrir su vista 3D interactiva, plano detallado y especificaciones completas.</p>
+      <p class="lead" id="planLead">Explora el plano interactivo. Presiona cualquier área para abrir su plano detallado y especificaciones completas.</p>
       
       <div class="legend-row">
         <div class="legend" id="planLegend"><i class="a"></i>Disponible <i class="o"></i>Ocupado <i class="c"></i>Próximamente</div>
-        <span class="plan-click-hint">✦ Haz clic en cualquier local para abrir su 3D</span>
+        <span class="plan-click-hint">✦ Haz clic en cualquier local para ver sus detalles</span>
       </div>
     </div>
   </div>
 
   <div class="plan-workspace rv" style="--d:.2s">
-    <!-- Lista lateral de unidades (elegante, espaciosa, con botón para abrir 3D) -->
+    <!-- Lista lateral de unidades -->
     <div class="plan-units-col">
       <div class="plan-units-header">
         <span>Espacios del nivel</span>
@@ -310,44 +310,26 @@
   <div><h4>Horario</h4><p>Lun–Vie 8:00 – 20:00<br>Sáb–Dom 9:00 – 17:00</p></div>
 </footer>
 
-<!-- Modal Popup: Vista 3D Interactivo, Render y Especificaciones del Espacio -->
+<!-- Modal Popup: Plano, Render y Especificaciones del Espacio -->
 <div class="unit-modal" id="unitModal" aria-hidden="true" role="dialog" aria-modal="true">
   <div class="unit-modal-overlay" id="unitModalOverlay"></div>
   <div class="unit-modal-window">
     <button class="unit-modal-close" id="unitModalClose" aria-label="Cerrar ventana">✕</button>
     <div class="unit-modal-content">
-      <!-- Columna Visual: Selector 3D / Foto / Plano -->
+      <!-- Columna Visual: Selector Plano / Foto -->
       <div class="um-visual-col">
         <div class="um-tabs">
-          <button class="um-tab on" data-view="3d">✦ Modelo 3D</button>
+          <button class="um-tab on" data-view="plan">📐 Plano Detallado</button>
           <button class="um-tab" data-view="photo">📷 Render / Foto</button>
-          <button class="um-tab" data-view="plan">📐 Plano Detallado</button>
         </div>
         <div class="um-view-container">
-          <div class="um-view-panel on" id="umView3D">
-            <div class="um-3d-stage" id="um3dStage">
-              <div class="um-3d-box" id="um3dBox">
-                <div class="u3d-floor">
-                  <div class="u3d-grid"></div>
-                  <div class="u3d-glow-area" id="u3dGlow"></div>
-                </div>
-                <div class="u3d-wall u3d-wall-back"></div>
-                <div class="u3d-wall u3d-wall-left"></div>
-                <div class="u3d-pin" id="u3dPin">
-                  <span class="u3d-badge" id="u3dBadge">L5</span>
-                  <div class="u3d-pulse"></div>
-                </div>
-              </div>
-              <div class="um-3d-hint"><span>↻ Mueve el cursor o arrastra para rotar en 3D</span></div>
-            </div>
+          <div class="um-view-panel on" id="umViewPlan">
+            <div class="um-plan-wrap" id="umPlanWrap"></div>
           </div>
           <div class="um-view-panel" id="umViewPhoto">
             <div class="um-photo-wrap">
               <img src="" alt="" id="umPhotoImg">
             </div>
-          </div>
-          <div class="um-view-panel" id="umViewPlan">
-            <div class="um-plan-wrap" id="umPlanWrap"></div>
           </div>
         </div>
       </div>
@@ -398,6 +380,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="script.js?v=54"></script>
+<script src="script.js?v=55"></script>
 </body>
 </html>

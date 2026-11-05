@@ -431,7 +431,7 @@ function renderLevel(lvlKey, targetUnitId = null) {
       </div>
       <div class="uc-bottom">
         <span>${u.area || 'Consultar'}</span>
-        <span class="uc-btn-hint">✦ Ver 3D & Plano ↗</span>
+        <span class="uc-btn-hint">Ver plano ↗</span>
       </div>
     </button>
   `).join('');
@@ -512,10 +512,6 @@ function openUnitModal(id) {
     $('#umPhotoImg').alt = u.name;
   }
 
-  if ($('#u3dBadge')) {
-    $('#u3dBadge').textContent = u.name.replace('Local ', 'L').replace('Oficina ', 'OF-');
-  }
-
   if ($('#umPlanWrap')) {
     // Show architectural plan highlighting current unit
     $('#umPlanWrap').innerHTML = lvl.getSvg(currentUnits);
@@ -523,8 +519,8 @@ function openUnitModal(id) {
     if (activeEl) activeEl.classList.add('on');
   }
 
-  // Switch to default 3D tab
-  switchUmTab('3d');
+  // Switch to default tab
+  switchUmTab('plan');
 
   const modal = $('#unitModal');
   if (modal) {
@@ -545,9 +541,8 @@ function closeUnitModal() {
 
 function switchUmTab(viewName) {
   $$('.um-tab').forEach(t => t.classList.toggle('on', t.dataset.view === viewName));
-  if ($('#umView3D')) $('#umView3D').classList.toggle('on', viewName === '3d');
-  if ($('#umViewPhoto')) $('#umViewPhoto').classList.toggle('on', viewName === 'photo');
   if ($('#umViewPlan')) $('#umViewPlan').classList.toggle('on', viewName === 'plan');
+  if ($('#umViewPhoto')) $('#umViewPhoto').classList.toggle('on', viewName === 'photo');
 }
 
 // Setup Unit Modal Event Handlers
@@ -566,34 +561,7 @@ function switchUmTab(viewName) {
     t.addEventListener('click', () => switchUmTab(t.dataset.view));
   });
 
-  // Interactive 3D Perspective rotation on mousemove / touchmove
-  const stage3d = $('#um3dStage');
-  const box3d = $('#um3dBox');
-  if (stage3d && box3d) {
-    stage3d.addEventListener('mousemove', e => {
-      const rect = stage3d.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      const rx = 25 - (y * 36);
-      const ry = -25 + (x * 46);
-      box3d.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-    });
 
-    stage3d.addEventListener('mouseleave', () => {
-      box3d.style.transform = 'rotateX(25deg) rotateY(-25deg)';
-    });
-
-    stage3d.addEventListener('touchmove', e => {
-      if (!e.touches.length) return;
-      const touch = e.touches[0];
-      const rect = stage3d.getBoundingClientRect();
-      const x = (touch.clientX - rect.left) / rect.width - 0.5;
-      const y = (touch.clientY - rect.top) / rect.height - 0.5;
-      const rx = 25 - (y * 36);
-      const ry = -25 + (x * 46);
-      box3d.style.transform = 'rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-    }, { passive: true });
-  }
 
   const contactBtn = $('#umContactBtn');
   if (contactBtn) {
