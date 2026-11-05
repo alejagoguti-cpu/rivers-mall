@@ -254,16 +254,19 @@ const LEVELS = {
       { id: 'pkg', name: 'Parqueadero Central', s: 'o', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas y zona de movilidad.' }
     ],
     getSvg: function(units) {
-      let svg = '<svg viewBox="0 0 720 876" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico amoblado del primer piso">' +
-        '<image href="assets/plano-piso1.png" x="0" y="0" width="720" height="876"/>';
+      // Plano girado 90° a la derecha para verlo horizontal: (x, y) -> (876 - y, x)
+      const rot = ([x, y]) => [876 - y, x];
+      let svg = '<svg viewBox="0 0 876 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico amoblado del primer piso">' +
+        '<image href="assets/plano-piso1.png" x="0" y="0" width="876" height="720"/>';
       units.forEach(u => {
         const g = geoP1[u.id];
         if (!g) return;
-        const xs = g.pts.map(p => p[0]), ys = g.pts.map(p => p[1]);
-        const [cx, cy] = g.c || [Math.round((Math.min(...xs) + Math.max(...xs)) / 2), Math.round((Math.min(...ys) + Math.max(...ys)) / 2)];
+        const pts = g.pts.map(rot);
+        const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+        const [cx, cy] = g.c ? rot(g.c) : [Math.round((Math.min(...xs) + Math.max(...xs)) / 2), Math.round((Math.min(...ys) + Math.max(...ys)) / 2)];
         const label = u.lbl || u.id.toUpperCase();
         svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
-          '<polygon points="' + g.pts.map(p => p.join(',')).join(' ') + '"/>' +
+          '<polygon points="' + pts.map(p => p.join(',')).join(' ') + '"/>' +
           '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
           '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
           '</g>';
@@ -451,7 +454,6 @@ function renderLevel(lvlKey, targetUnitId = null) {
       </div>
       <div class="uc-bottom">
         <span>${u.area || 'Consultar'}</span>
-        <span class="uc-btn-hint">Ver plano ↗</span>
       </div>
     </button>
   `).join('');
