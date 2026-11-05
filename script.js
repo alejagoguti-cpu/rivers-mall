@@ -228,261 +228,38 @@ const LEVELS = {
     name: 'Primer Piso',
     eyebrow: 'Edificio Norte · Primer piso',
     title: 'Donde tu marca pertenece',
-    lead: 'Explora la planta de primer piso. Presiona cualquier local, ancla o zona para ver especificaciones completas, disponibilidad y planos.',
+    lead: 'Explora la distribución comercial del primer piso. Presiona cualquier local, ancla o zona para ver sus especificaciones y planos detallados.',
     units: [
-      {
-        id: 'ara',
-        name: 'Tiendas Ara · Supermercado Ancla',
-        lbl: 'ARA',
-        s: 'o',
-        area: '485,30 m²',
-        use: 'Supermercado & Consumo Masivo',
-        poly: '340,46 678,46 678,149 340,149',
-        cx: 510,
-        cy: 98,
-        r: 16,
-        photo: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80',
-        desc: 'Supermercado ancla de autoservicio en el ala norte con amplio frente hacia la circulación principal, 8 cajas registradoras, pasillos de alta capacidad, muelle de carga interno y baterías sanitarias independientes.'
-      },
-      {
-        id: '1',
-        name: 'Local 1 · Bulevar Sur (Mezanine)',
-        lbl: 'L1',
-        s: 'a',
-        area: '102,49 m²',
-        use: 'Retail / Comercio / Moda',
-        poly: '515,470 550,470 550,605 515,605',
-        cx: 532,
-        cy: 537,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80',
-        desc: 'Local comercial con doble altura apto para mezanine, vitrina de piso a techo sobre el bulevar sur y punto hidrosanitario independiente.'
-      },
-      {
-        id: '2',
-        name: 'Local 2 · Bulevar Sur (Mezanine)',
-        lbl: 'L2',
-        s: 'a',
-        area: '102,49 m²',
-        use: 'Retail / Marcas Especializadas',
-        poly: '550,470 585,470 585,605 550,605',
-        cx: 567,
-        cy: 537,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
-        desc: 'Módulo comercial de alta exposición con altura libre de 4,20 m, ductos para climatización y frente acristalado continuo.'
-      },
-      {
-        id: '3',
-        name: 'Local 3 · Bulevar Sur (Mezanine)',
-        lbl: 'L3',
-        s: 'a',
-        area: '102,49 m²',
-        use: 'Retail / Tecnología / Óptica',
-        poly: '585,470 618,470 618,605 585,605',
-        cx: 601,
-        cy: 537,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80',
-        desc: 'Unidad comercial estratégica frente al circuito de parqueaderos y acceso vehicular, lista para instalación inmediata.'
-      },
-      {
-        id: '4',
-        name: 'Local 4 · Bulevar Sur (Mezanine)',
-        lbl: 'L4',
-        s: 'a',
-        area: '102,49 m²',
-        use: 'Retail / Telefonía / Belleza',
-        poly: '618,470 650,470 650,605 618,605',
-        cx: 634,
-        cy: 537,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80',
-        desc: 'Excelente ubicación vecina a la galería central y escaleras de conexión, con óptimo flujo de visitantes cautivos.'
-      },
-      {
-        id: '5',
-        name: 'Local 5 · Galería Norte',
-        lbl: 'L5',
-        s: 'a',
-        area: '105,53 m²',
-        use: 'Retail / Comercio',
-        poly: '556,160 605,160 605,270 556,270',
-        cx: 580,
-        cy: 215,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80',
-        desc: 'Local comercial en corredor principal con doble vitrina de exposición y acceso directo desde la plaza peatonal.'
-      },
-      {
-        id: '6',
-        name: 'Local 6 · Galería Norte',
-        lbl: 'L6',
-        s: 'a',
-        area: '105,53 m²',
-        use: 'Retail / Comercio',
-        poly: '516,160 556,160 556,270 516,270',
-        cx: 536,
-        cy: 215,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=800&q=80',
-        desc: 'Espacio ideal para tiendas de moda o calzado con punto hidráulico y excelente iluminación natural.'
-      },
-      {
-        id: '7',
-        name: 'Local 7 · Galería Norte',
-        lbl: 'L7',
-        s: 'a',
-        area: '104,20 m²',
-        use: 'Retail / Experiencia',
-        poly: '474,160 516,160 516,270 474,270',
-        cx: 495,
-        cy: 215,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80',
-        desc: 'Ubicación contigua al núcleo comercial con alto flujo peatonal y facilidades de adecuación inmediata.'
-      },
-      {
-        id: '8',
-        name: 'Local 8 · Café & Panadería',
-        lbl: 'L8',
-        s: 'c',
-        area: '104,20 m²',
-        use: 'Gastronomía / Café Boutique',
-        poly: '425,160 474,160 474,270 425,270',
-        cx: 450,
-        cy: 215,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
-        desc: 'Local en esquina interior frente a la circulación central con barra de servicio y mesas para comensales.'
-      },
-      {
-        id: 'g1',
-        name: 'Terraza Gourmet & Gastrobar',
-        lbl: 'G1',
-        s: 'a',
-        area: '142,60 m²',
-        use: 'Restaurante / Bar / Gastronomía',
-        poly: '605,160 690,160 690,270 605,270',
-        cx: 645,
-        cy: 215,
-        r: 14,
-        photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80',
-        desc: 'Espacio gastronómico premium con zona de cocina profesional, barra de coctelería y amplia terraza cubierta abierta a los jardines.'
-      },
-      {
-        id: 'm1',
-        name: 'Local 9 Mezanine · Ala Oeste',
-        lbl: 'L9',
-        s: 'a',
-        area: '138,50 m²',
-        use: 'Showroom / Gimnasio Boutique / Salud',
-        poly: '340,307 460,307 460,390 340,390',
-        cx: 400,
-        cy: 348,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80',
-        desc: 'Local comercial en doble altura con mezanine estructural, escalera de diseño y gran visibilidad desde el bulevar.'
-      },
-      {
-        id: 'm2',
-        name: 'Local 10 Mezanine · Ala Oeste',
-        lbl: 'L10',
-        s: 'a',
-        area: '138,50 m²',
-        use: 'Showroom / Coworking / Centro Médico',
-        poly: '340,390 460,390 460,470 340,470',
-        cx: 400,
-        cy: 430,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',
-        desc: 'Unidad de dos niveles con excelente iluminación natural, ideal para servicios corporativos, centro de estética o retail de diseño.'
-      },
-      {
-        id: 'cp',
-        name: 'Café Bistró Patio Central',
-        lbl: 'CP',
-        s: 'a',
-        area: '68,20 m²',
-        use: 'Café / Heladería / Pastelería',
-        poly: '340,270 460,270 460,307 340,307',
-        cx: 400,
-        cy: 288,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
-        desc: 'Punto de encuentro al paso con terraza pergolada hacia el patio central, ideal para franquicia de café o repostería artesanal.'
-      },
-      {
-        id: 'rs',
-        name: 'Restaurante Bulevar Suroccidente',
-        lbl: 'R2',
-        s: 'a',
-        area: '118,80 m²',
-        use: 'Gastronomía / Casual Dining',
-        poly: '340,470 515,470 515,530 340,530',
-        cx: 428,
-        cy: 500,
-        r: 13,
-        photo: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
-        desc: 'Amplia sala comedor con mesas interiores y exteriores, punto de extracción de humo y servicios sanitarios contiguos.'
-      },
-      {
-        id: 'd1',
-        name: 'Tiendas D1 · Conveniencia',
-        lbl: 'D1',
-        s: 'o',
-        area: '182,40 m²',
-        use: 'Supermercado de Descuento',
-        poly: '340,530 515,530 515,615 340,615',
-        cx: 428,
-        cy: 572,
-        r: 15,
-        photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=800&q=80',
-        desc: 'Tienda de descuento duro y artículos de primera necesidad sobre el ala suroccidente, con acceso ágil desde las bahías vehiculares.'
-      },
-      {
-        id: 'cv',
-        name: 'Cruz Verde · Droguería & Bienestar',
-        lbl: 'CV',
-        s: 'o',
-        area: '292,41 m²',
-        use: 'Farmacia & Salud',
-        poly: '692,470 785,470 828,565 828,605 692,605',
-        cx: 752,
-        cy: 537,
-        r: 15,
-        photo: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=800&q=80',
-        desc: 'Sede consolidada de farmacia y productos de salud y bienestar con atención continua y acceso directo desde la plazoleta.'
-      },
-      {
-        id: 'pkg',
-        name: 'Parqueaderos Superficie & Bahía Valet',
-        lbl: 'P1',
-        s: 'o',
-        area: '1.450 m²',
-        use: 'Estacionamiento & Movilidad',
-        poly: '515,275 745,275 745,465 515,465',
-        cx: 630,
-        cy: 370,
-        r: 15,
-        photo: 'assets/sotano-parqueadero.webp',
-        desc: 'Circuito de estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas, zona para motos y estación para vehículos eléctricos.'
-      }
+      { id: '1', name: 'Local 1', s: 'a', area: '102,49 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Espacio comercial sobre bulevar principal, con doble altura apta para mezanine y vitrina piso a techo.' },
+      { id: '2', name: 'Local 2', s: 'a', area: '102,49 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local regular con frente acristalado de piso a techo y altura libre de 4,20 metros para mezzanine.' },
+      { id: '3', name: 'Local 3', s: 'a', area: '102,49 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Unidad comercial optimizada para marcas de retail, telefonía, óptica o servicios financieros.' },
+      { id: '4', name: 'Local 4', s: 'a', area: '102,49 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Excelente ubicación vecina a Cruz Verde y acceso a baterías de baños de visitantes.' },
+      { id: 'cv', name: 'Cruz Verde', s: 'o', area: '292,41 m²', use: 'Farmacia & Salud', photo: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=700&q=80', desc: 'Sede consolidada de farmacia y productos de salud y bienestar con atención ininterrumpida.' },
+      { id: '5', name: 'Local 5', s: 'a', area: '105,53 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial en corredor principal con doble vitrina de exposición y acceso directo desde la plaza peatonal.' },
+      { id: '6', name: 'Local 6', s: 'a', area: '105,53 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Espacio ideal para tiendas de moda o calzado con punto hidráulico y excelente iluminación natural.' },
+      { id: '7', name: 'Local 7', s: 'a', area: '104,20 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Ubicación contigua al núcleo comercial con alto flujo peatonal y facilidades de adecuación inmediata.' },
+      { id: '8', name: 'Local 8', s: 'a', area: '104,20 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Local en esquina interior frente a la circulación central con visibilidad de 180 grados.' },
+      { id: 'ara', name: 'Tiendas Ara', s: 'o', area: '485,30 m²', use: 'Supermercado Ancla', photo: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80', desc: 'Supermercado ancla de autoservicio en el ala norte, con alta capacidad de atención y muelle de carga.' },
+      { id: 'd1', name: 'Tiendas D1', s: 'o', area: '182,40 m²', use: 'Supermercado Descuento', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=800&q=80', desc: 'Tienda de descuento duro y artículos de primera necesidad sobre el ala suroccidente con acceso ágil.' },
+      { id: 'g1', name: 'Terraza Gourmet', s: 'a', area: '142,60 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', desc: 'Espacio gastronómico con zona de cocina profesional, barra de bebidas y terraza abierta a los jardines.' },
+      { id: 'm1', name: 'Local 9 Mezanine', s: 'a', area: '138,50 m²', use: 'Retail / Showroom / Salud', photo: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80', desc: 'Local comercial en doble altura con mezanine estructural de diseño y amplia visibilidad.' },
+      { id: 'm2', name: 'Local 10 Mezanine', s: 'a', area: '138,50 m²', use: 'Retail / Coworking / Servicios', photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80', desc: 'Módulo comercial de dos niveles con excelente iluminación y climatización central.' },
+      { id: 'pkg', name: 'Parqueadero Central', s: 'o', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas y zona de movilidad.' }
     ],
     getSvg: function(units) {
-      let svg = '<svg viewBox="0 0 917 702" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Plano arquitectónico interactivo del primer piso">' +
-        '<image href="assets/plano-p1.jpg" xlink:href="assets/plano-p1.jpg" x="0" y="0" width="917" height="702" preserveAspectRatio="xMidYMid meet"/>' +
-        '<g class="p1-interactive-layer">';
+      let svg = '<svg viewBox="0 0 750 615" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico del primer piso, Edificio Norte">' + cachedBaseP1;
       units.forEach(u => {
-        if (!u.poly) return;
+        if (!geoP1[u.id]) return;
+        const [x, y, w, h] = toPlan(geoP1[u.id]);
+        const cx = Math.round(x + w / 2), cy = Math.round(y + h / 2);
+        const label = u.lbl || (u.id === 'cv' ? 'CV' : u.id === 'ara' ? 'ARA' : u.id === 'd1' ? 'D1' : u.id === 'pkg' ? 'P1' : u.id === 'g1' ? 'G1' : u.id);
         svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
-          '<polygon points="' + u.poly + '"/>' +
-          '<circle cx="' + u.cx + '" cy="' + u.cy + '" r="' + (u.r || 13) + '"/>' +
-          '<text x="' + u.cx + '" y="' + (u.cy + 3.5) + '" text-anchor="middle">' + (u.lbl || u.id.toUpperCase()) + '</text>' +
+          '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"/>' +
+          '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
+          '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
           '</g>';
       });
-      svg += '</g></svg>';
-      return svg;
+      return svg + '</svg>';
     }
   },
 
@@ -808,8 +585,15 @@ $$('#levelTabs .ltab').forEach(b => {
   b.onclick = () => renderLevel(b.dataset.lvl);
 });
 
-// Initialize default level
-renderLevel('primer-piso');
+// Load Primer Piso SVG base and initialize
+fetch('assets/plano-base.svg').then(r => r.text()).then(t => {
+  const open = t.indexOf('>') + 1, close = t.lastIndexOf('</svg>');
+  cachedBaseP1 = t.slice(open, close);
+  renderLevel('primer-piso');
+}).catch(() => {
+  cachedBaseP1 = '';
+  renderLevel('primer-piso');
+});
 
 /* tilt on images */
 $$('.tilt').forEach(img => {
