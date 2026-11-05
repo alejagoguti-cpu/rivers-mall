@@ -89,15 +89,20 @@ new IntersectionObserver((es, o) => es.forEach(e => {
 /* MULTI-LEVEL DATA: SÓTANO, PRIMER PISO, OFICINAS */
 const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
 
-const PDF = { Y1: 3180, X0: -390 };
-const toPlan = ([x1, y1, x2, y2]) => [PDF.Y1 - y2, x1 - PDF.X0, y2 - y1, x2 - x1];
+/* Primer piso: polígonos en coordenadas del plano amoblado (viewBox 720 x 876) */
+const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  '5': [-316, 2741, -161, 2792], '6': [-316, 2794, -161, 2844], '7': [-316, 2846, -161, 2896], '8': [-316, 2898, -161, 2948],
-  '1': [-160, 3001, -110, 3157], '2': [-107, 3001, -58, 3157], '3': [-56, 3001, -6, 3157], '4': [-3, 3001, 47, 3157],
-  'cv': [50, 3001, 205, 3157],
+  'ara': { pts: [[30, 20], [455, 20], [527, 241], [394, 241], [394, 125], [30, 125]], c: [250, 72] },
+  '1': { pts: R(333, 125, 394, 241) }, '2': { pts: R(273, 125, 333, 241) }, '3': { pts: R(212, 125, 273, 241) },
+  '4': { pts: [[92, 125], [212, 125], [212, 241], [152, 241], [152, 180], [92, 180]], c: [182, 158] },
+  'rest': { pts: R(32, 250, 272, 357) },
+  '5': { pts: R(95, 362, 272, 422) }, '6': { pts: R(95, 422, 272, 482) },
+  '7': { pts: R(32, 482, 272, 542) }, '8': { pts: R(32, 542, 272, 602) },
+  'd1': { pts: R(32, 603, 272, 845) },
+  '9': { pts: R(272, 662, 332, 845) }, '10': { pts: R(332, 662, 392, 845) },
+  '11': { pts: R(392, 662, 452, 845) }, '12': { pts: R(452, 662, 512, 845) },
+  'cv': { pts: [[513, 662], [648, 662], [695, 760], [695, 845], [513, 845]], c: [600, 754] },
 };
-
-let cachedBaseP1 = '';
 
 const LEVELS = {
   'sotano': {
@@ -230,31 +235,35 @@ const LEVELS = {
     title: 'Donde tu marca pertenece',
     lead: 'Explora la distribución comercial del primer piso. Presiona cualquier local, ancla o zona para ver sus especificaciones y planos detallados.',
     units: [
-      { id: '1', name: 'Local 1', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Espacio comercial sobre bulevar principal, con doble altura apta para mezanine y vitrina piso a techo.' },
-      { id: '2', name: 'Local 2', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local regular con frente acristalado de piso a techo y altura libre de 4,20 metros para mezzanine.' },
-      { id: '3', name: 'Local 3', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Unidad comercial optimizada para marcas de retail, telefonía, óptica o servicios financieros.' },
-      { id: '4', name: 'Local 4', s: 'a', area: '93 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Excelente ubicación vecina a Cruz Verde y acceso a baterías de baños de visitantes.' },
-      { id: 'cv', name: 'Cruz Verde', s: 'o', area: '284 m²', use: 'Farmacia & Salud', photo: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=700&q=80', desc: 'Sede consolidada de farmacia y productos de salud y bienestar con atención ininterrumpida.' },
-      { id: '5', name: 'Local 5', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial en corredor principal con doble vitrina de exposición y acceso directo desde la plaza peatonal.' },
-      { id: '6', name: 'Local 6', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Espacio ideal para tiendas de moda o calzado con punto hidráulico y excelente iluminación natural.' },
-      { id: '7', name: 'Local 7', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Ubicación contigua al núcleo comercial con alto flujo peatonal y facilidades de adecuación inmediata.' },
-      { id: '8', name: 'Local 8', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Local en esquina interior frente a la circulación central con visibilidad de 180 grados.' },
-      { id: 'ara', name: 'Tiendas Ara', s: 'o', area: '541 m²', use: 'Supermercado Ancla', photo: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=800&q=80', desc: 'Supermercado ancla de autoservicio en el ala norte, con alta capacidad de atención y muelle de carga.' },
-      { id: 'd1', name: 'Tiendas D1', s: 'o', area: '557 m²', use: 'Supermercado Descuento', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=800&q=80', desc: 'Tienda de descuento duro y artículos de primera necesidad sobre el ala suroccidente con acceso ágil.' },
-      { id: 'g1', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80', desc: 'Espacio gastronómico con zona de cocina profesional, barra de bebidas y terraza abierta a los jardines.' },
-      { id: 'm1', name: 'Local 9', s: 'a', area: '99 m²', use: 'Retail / Showroom / Salud', photo: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80', desc: 'Local comercial en doble altura con mezanine estructural de diseño y amplia visibilidad.' },
-      { id: 'm2', name: 'Local 10', s: 'a', area: '98 m²', use: 'Retail / Coworking / Servicios', photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80', desc: 'Módulo comercial de dos niveles con excelente iluminación y climatización central.' },
+      { id: 'ara', name: 'Tiendas Ara', s: 'o', area: '541 m²', use: 'Supermercado Ancla', photo: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=700&q=80', desc: 'Supermercado ancla que ocupa la franja superior del primer piso, con su zona de cajas junto al acceso vehicular.' },
+      { id: '1', name: 'Local 1', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, contiguo a Tiendas Ara.' },
+      { id: '2', name: 'Local 2', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, entre los locales 1 y 3.' },
+      { id: '3', name: 'Local 3', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, entre los locales 2 y 4.' },
+      { id: '4', name: 'Local 4', s: 'a', area: '93 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local en L, el de mayor área de la franja superior.' },
+      { id: 'rest', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80', desc: 'Zona de restaurante con mesas, frente a la circulación central.', lbl: 'R' },
+      { id: '5', name: 'Local 5', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la columna izquierda, junto a la batería de baños.' },
+      { id: '6', name: 'Local 6', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la columna izquierda, entre los locales 5 y 7.' },
+      { id: '7', name: 'Local 7', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda.' },
+      { id: '8', name: 'Local 8', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda, contiguo a Tiendas D1.' },
+      { id: 'd1', name: 'Tiendas D1', s: 'o', area: '557 m²', use: 'Supermercado Descuento', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Supermercado de descuento en la esquina inferior izquierda del primer piso.' },
+      { id: '9', name: 'Local 9', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, frente a la circulación central.' },
+      { id: '10', name: 'Local 10', s: 'a', area: '98 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 9 y 11.' },
+      { id: '11', name: 'Local 11', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 10 y 12.' },
+      { id: '12', name: 'Local 12', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, contiguo a Cruz Verde.' },
+      { id: 'cv', name: 'Cruz Verde', s: 'o', area: '284 m²', use: 'Farmacia & Salud', photo: 'https://images.unsplash.com/photo-1576602976047-174e57a47881?auto=format&fit=crop&w=700&q=80', desc: 'Droguería en la esquina inferior derecha del primer piso.' },
       { id: 'pkg', name: 'Parqueadero Central', s: 'o', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas y zona de movilidad.' }
     ],
     getSvg: function(units) {
-      let svg = '<svg viewBox="0 0 750 615" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico del primer piso, Edificio Norte">' + cachedBaseP1;
+      let svg = '<svg viewBox="0 0 720 876" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico amoblado del primer piso">' +
+        '<image href="assets/plano-piso1.png" x="0" y="0" width="720" height="876"/>';
       units.forEach(u => {
-        if (!geoP1[u.id]) return;
-        const [x, y, w, h] = toPlan(geoP1[u.id]);
-        const cx = Math.round(x + w / 2), cy = Math.round(y + h / 2);
-        const label = u.lbl || (u.id === 'cv' ? 'CV' : u.id === 'ara' ? 'ARA' : u.id === 'd1' ? 'D1' : u.id === 'pkg' ? 'P1' : u.id === 'g1' ? 'G1' : u.id);
+        const g = geoP1[u.id];
+        if (!g) return;
+        const xs = g.pts.map(p => p[0]), ys = g.pts.map(p => p[1]);
+        const [cx, cy] = g.c || [Math.round((Math.min(...xs) + Math.max(...xs)) / 2), Math.round((Math.min(...ys) + Math.max(...ys)) / 2)];
+        const label = u.lbl || u.id.toUpperCase();
         svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
-          '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"/>' +
+          '<polygon points="' + g.pts.map(p => p.join(',')).join(' ') + '"/>' +
           '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
           '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
           '</g>';
@@ -585,15 +594,8 @@ $$('#levelTabs .ltab').forEach(b => {
   b.onclick = () => renderLevel(b.dataset.lvl);
 });
 
-// Load Primer Piso SVG base and initialize
-fetch('assets/plano-base.svg').then(r => r.text()).then(t => {
-  const open = t.indexOf('>') + 1, close = t.lastIndexOf('</svg>');
-  cachedBaseP1 = t.slice(open, close);
-  renderLevel('primer-piso');
-}).catch(() => {
-  cachedBaseP1 = '';
-  renderLevel('primer-piso');
-});
+// Initialize Primer Piso
+renderLevel('primer-piso');
 
 /* tilt on images */
 $$('.tilt').forEach(img => {
