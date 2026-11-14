@@ -541,8 +541,24 @@ function openUnitModal(id) {
     if (activeEl) activeEl.classList.add('on');
   }
 
-  // Switch to default tab
-  switchUmTab('plan');
+  // 360 View support (specifically for Oficina Privada 1)
+  const tab360 = $('#umTab360');
+  const frame360 = $('#um360Frame');
+  const btn360 = $('#um360FullBtn');
+  if (u.id === 'of1') {
+    if (tab360) tab360.style.display = 'inline-flex';
+    if (btn360) btn360.style.display = 'inline-block';
+    if (frame360 && frame360.getAttribute('src') !== 'oficina-360.html') {
+      frame360.src = 'oficina-360.html';
+    }
+    // Directly show 360 view for Oficina Privada 1
+    switchUmTab('360');
+  } else {
+    if (tab360) tab360.style.display = 'none';
+    if (btn360) btn360.style.display = 'none';
+    if (frame360) frame360.src = '';
+    switchUmTab('plan');
+  }
 
   const modal = $('#unitModal');
   if (modal) {
@@ -559,12 +575,15 @@ function closeUnitModal() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
+  const frame360 = $('#um360Frame');
+  if (frame360) frame360.src = '';
 }
 
 function switchUmTab(viewName) {
   $$('.um-tab').forEach(t => t.classList.toggle('on', t.dataset.view === viewName));
   if ($('#umViewPlan')) $('#umViewPlan').classList.toggle('on', viewName === 'plan');
   if ($('#umViewPhoto')) $('#umViewPhoto').classList.toggle('on', viewName === 'photo');
+  if ($('#umView360')) $('#umView360').classList.toggle('on', viewName === '360');
 }
 
 // Setup Unit Modal Event Handlers
