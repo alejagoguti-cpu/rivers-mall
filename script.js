@@ -277,9 +277,9 @@ const LEVELS = {
 
   'oficinas': {
     name: 'Oficinas',
-    eyebrow: 'Edificio Norte · Piso 3 & Oficinas Corporativas',
+    eyebrow: 'Edificio Norte · Piso 2 & Oficinas Corporativas',
     title: 'Espacios de Trabajo & Coworking',
-    lead: 'Explora las oficinas corporativas amobladas (5-10 personas), sala de juntas, cafetería y terraza panorámica.',
+    lead: 'Explora las oficinas corporativas ubicadas en el segundo nivel sobre el Local 13, con terraza panorámica, salas ejecutivas y acabados de primer nivel.',
     units: [
       {
         id: 'of1',
@@ -346,79 +346,75 @@ const LEVELS = {
       }
     ],
     getSvg: function(units) {
-      return `<svg viewBox="0 0 750 615" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano de distribución de Oficinas Piso 3">
-        <defs>
-          <pattern id="ofGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
-          </pattern>
-          <pattern id="woodDeck" width="12" height="12" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="12" y2="0" stroke="rgba(229,178,90,0.25)" stroke-width="2"/>
-          </pattern>
-        </defs>
-        <rect width="750" height="615" fill="#171f22"/>
-        <rect x="15" y="15" width="720" height="585" fill="url(#ofGrid)"/>
+      let svg = '<svg viewBox="0 0 876 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano de distribución de Oficinas Piso 2 sobre Local 13">' +
+        '<defs>' +
+          '<pattern id="ofGrid" width="30" height="30" patternUnits="userSpaceOnUse">' +
+            '<path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>' +
+          '</pattern>' +
+          '<pattern id="woodDeck2" width="10" height="10" patternUnits="userSpaceOnUse">' +
+            '<line x1="0" y1="0" x2="10" y2="0" stroke="rgba(229,178,90,0.3)" stroke-width="2"/>' +
+          '</pattern>' +
+        '</defs>' +
 
-        <!-- Perimeter Wall Outline (Piso 3 + Terraza) -->
-        <polygon points="20,40 580,40 580,210 710,210 710,580 20,580" fill="#1d262a" stroke="#4d5b62" stroke-width="2"/>
+        '<!-- Proyección de la Primera Planta -->' +
+        '<image href="assets/plano-piso1.png" x="0" y="0" width="876" height="720" opacity="0.22" style="filter: brightness(0.7) contrast(1.1);"/>' +
+        '<rect x="0" y="0" width="876" height="720" fill="url(#ofGrid)"/>' +
 
-        <!-- Structural Columns Grid -->
-        ${[60, 160, 260, 360, 460, 560, 660].map(cx => 
-          [80, 180, 280, 380, 480, 550].map(cy => 
-            (cx <= 580 || cy >= 210) ? `<rect x="${cx-4}" y="${cy-4}" width="8" height="8" fill="#61747d" stroke="#8da0a8" stroke-width="1"/>` : ''
-          ).join('')
-        ).join('')}
+        '<!-- Etiqueta de planta proyectada inferior -->' +
+        '<g opacity="0.65">' +
+          '<rect x="230" y="460" width="280" height="30" rx="15" fill="rgba(18,24,28,0.75)" stroke="rgba(127,192,240,0.3)" stroke-width="1"/>' +
+          '<text x="370" y="479" fill="#7fc0f0" font-size="10" font-weight="700" letter-spacing="1.5" text-anchor="middle">PRIMERA PLANTA PROYECTADA (Nivel 1)</text>' +
+        '</g>' +
 
-        <!-- Deck Texture for Terraza -->
-        <rect x="35" y="235" width="165" height="185" fill="url(#woodDeck)"/>
-        <text x="117" y="325" fill="#e5b25a" font-size="10.5" font-weight="700" letter-spacing="2" text-anchor="middle">DECK PANORÁMICO</text>
+        '<!-- Placa y contorno de Piso 2 directamente sobre Local 13 -->' +
+        '<g filter="drop-shadow(0 15px 30px rgba(0,0,0,0.7))">' +
+          '<polygon points="858,26 858,458 745,458 745,528 632,530 632,392 745,392 745,26" fill="#171f22" stroke="#3b76a8" stroke-width="2.5"/>' +
+        '</g>' +
 
-        <!-- Circulation Lines -->
-        <path d="M 210,130 L 210,480" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="6 6"/>
-        <path d="M 210,220 L 570,220" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="6 6"/>
+        '<!-- Deck Textura Terraza (OF4) -->' +
+        '<polygon points="748,30 856,30 856,120 748,120" fill="url(#woodDeck2)"/>' +
 
-        <!-- Interactive Units -->
-        <g class="su a" data-id="of1" tabindex="0" role="button" aria-label="Oficina Ejecutiva 1">
-          <rect x="230" y="55" width="105" height="150" rx="4"/>
-          <circle cx="282" cy="130" r="13"/>
-          <text x="282" y="134" text-anchor="middle">OF1</text>
-        </g>
+        '<!-- Escalera de acceso desde Primer Piso -->' +
+        '<g>' +
+          '<rect x="640" y="335" width="100" height="52" fill="#1c2529" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>' +
+          '<path d="M 640 344 L 740 344 M 640 353 L 740 353 M 640 362 L 740 362 M 640 371 L 740 371 M 640 380 L 740 380" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>' +
+          '<text x="690" y="365" fill="#7fc0f0" font-size="9" font-weight="700" letter-spacing="1" text-anchor="middle">ACCESO ESCALERA</text>' +
+        '</g>' +
 
-        <g class="su a" data-id="of2" tabindex="0" role="button" aria-label="Oficina Ejecutiva 2">
-          <rect x="345" y="55" width="105" height="150" rx="4"/>
-          <circle cx="397" cy="130" r="13"/>
-          <text x="397" y="134" text-anchor="middle">OF2</text>
-        </g>
+        '<!-- Pasillo de circulación Piso 2 -->' +
+        '<rect x="735" y="30" width="12" height="428" fill="rgba(47,106,154,0.15)"/>' +
+        '<path d="M 741 35 L 741 450" fill="none" stroke="rgba(127,192,240,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>' +
 
-        <g class="su a" data-id="of3" tabindex="0" role="button" aria-label="Sala de Juntas Corporativa">
-          <rect x="460" y="55" width="110" height="150" rx="4"/>
-          <circle cx="515" cy="130" r="13"/>
-          <text x="515" y="134" text-anchor="middle">OF3</text>
-        </g>
+        '<!-- Título Piso 2 -->' +
+        '<g>' +
+          '<rect x="635" y="8" width="223" height="18" rx="4" fill="rgba(47,106,154,0.3)" stroke="rgba(127,192,240,0.5)" stroke-width="1"/>' +
+          '<text x="746" y="21" fill="#fff" font-size="9.5" font-weight="700" letter-spacing="1.5" text-anchor="middle">PISO 2 · SOBRE LOCAL 13</text>' +
+        '</g>';
 
-        <g class="su a" data-id="of4" tabindex="0" role="button" aria-label="Terraza & Deck Lounge">
-          <rect x="35" y="230" width="165" height="190" rx="4"/>
-          <circle cx="117" cy="345" r="13"/>
-          <text x="117" y="349" text-anchor="middle">OF4</text>
-        </g>
+      const geoOf = {
+        'of4': { pts: [[748, 30], [856, 30], [856, 120], [748, 120]], c: [802, 75], lbl: 'OF4' },
+        'of1': { pts: [[748, 125], [856, 125], [856, 200], [748, 200]], c: [802, 162], lbl: 'OF1' },
+        'of2': { pts: [[748, 205], [856, 205], [856, 280], [748, 280]], c: [802, 242], lbl: 'OF2' },
+        'of3': { pts: [[748, 285], [856, 285], [856, 370], [748, 370]], c: [802, 327], lbl: 'OF3' },
+        'of5': { pts: [[748, 375], [856, 375], [856, 455], [748, 455]], c: [802, 415], lbl: 'OF5' },
+        'of6': { pts: [[640, 395], [740, 395], [740, 460], [640, 460]], c: [690, 427], lbl: 'OF6' },
+        'of7': { pts: [[640, 465], [740, 465], [740, 525], [635, 527]], c: [688, 495], lbl: 'OF7' }
+      };
 
-        <g class="su a" data-id="of5" tabindex="0" role="button" aria-label="Cafetería & Barra Mirador">
-          <rect x="35" y="435" width="165" height="135" rx="4"/>
-          <circle cx="117" cy="502" r="13"/>
-          <text x="117" y="506" text-anchor="middle">OF5</text>
-        </g>
+      units.forEach(u => {
+        const g = geoOf[u.id];
+        if (!g) return;
+        const pts = g.pts;
+        const [cx, cy] = g.c;
+        const label = u.lbl || g.lbl || u.id.toUpperCase();
+        svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
+          '<polygon points="' + pts.map(p => p.join(',')).join(' ') + '"/>' +
+          '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
+          '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
+          '</g>';
+      });
 
-        <g class="su a" data-id="of6" tabindex="0" role="button" aria-label="Cabinas Acústicas">
-          <rect x="230" y="240" width="130" height="110" rx="4"/>
-          <circle cx="295" cy="295" r="13"/>
-          <text x="295" y="299" text-anchor="middle">OF6</text>
-        </g>
-
-        <g class="su o" data-id="of7" tabindex="0" role="button" aria-label="Batería Sanitaria & PMR">
-          <rect x="375" y="240" width="195" height="110" rx="4"/>
-          <circle cx="472" cy="295" r="13"/>
-          <text x="472" y="299" text-anchor="middle">OF7</text>
-        </g>
-      </svg>`;
+      return svg + '</svg>';
     }
   }
 };
@@ -620,7 +616,7 @@ const photo = i => 'https://images.unsplash.com/photo-' + photos[i % photos.leng
 // Combine featured available units across levels
 const allAvail = [
   ...LEVELS['primer-piso'].units.filter(u => u.s === 'a').map(u => ({ ...u, lvl: 'primer-piso', lvlLabel: 'Primer piso' })),
-  ...LEVELS['oficinas'].units.filter(u => u.s === 'a').map(u => ({ ...u, lvl: 'oficinas', lvlLabel: 'Piso 3 · Oficinas' })),
+  ...LEVELS['oficinas'].units.filter(u => u.s === 'a').map(u => ({ ...u, lvl: 'oficinas', lvlLabel: 'Piso 2 · Oficinas' })),
   ...LEVELS['sotano'].units.filter(u => u.s === 'a').map(u => ({ ...u, lvl: 'sotano', lvlLabel: 'Nivel Sótano' })),
 ];
 
