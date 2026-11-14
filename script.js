@@ -290,22 +290,22 @@ const LEVELS = {
     name: 'Oficinas',
     eyebrow: 'Edificio Norte · Piso 2 & Oficinas Corporativas',
     title: 'Espacios de Trabajo & Coworking',
-    lead: 'Selecciona Oficina 1, Restaurante o Terraza. Haz doble clic en Oficina 1 para abrir su vista panorámica 360°.',
+    lead: 'Selecciona Oficina 1, Restaurante o Balcón. Haz doble clic en Oficina 1 para abrir su vista panorámica 360°.',
     units: [
       {
-        id: 'of1', name: 'Oficina 1', lbl: '1', s: 'a', use: 'Oficina',
+        id: 'of1', name: 'Oficina 1', lbl: '1', s: 'a', area: '516 m²', use: 'Oficina',
         photo: 'assets/oficinas-privada.jpg',
         desc: 'Oficina 1 del segundo piso. Haz doble clic en el plano o en su ficha para abrir la vista panorámica 360°.'
       },
       {
-        id: 'rest2', name: 'Restaurante', lbl: 'R', s: 'a', use: 'Restaurante',
+        id: 'rest2', name: 'Restaurante', lbl: 'R', s: 'a', area: '245 m²', use: 'Restaurante',
         photo: 'assets/oficinas-cafeteria.jpg',
-        desc: 'Restaurante del segundo piso, junto a la terraza.'
+        desc: 'Restaurante del segundo piso, junto al balcón.'
       },
       {
-        id: 'terraza2', name: 'Terraza', lbl: 'T', s: 'a', use: 'Terraza',
+        id: 'terraza2', name: 'Balcón', lbl: 'B', s: 'a', area: '70 m²', use: 'Balcón',
         photo: 'assets/oficinas-terraza.png',
-        desc: 'Terraza del segundo piso, contigua al restaurante.'
+        desc: 'Balcón del segundo piso, contiguo al restaurante.'
       }
     ],
     getSvg: function(units) {
@@ -316,7 +316,7 @@ const LEVELS = {
         terraza2: { pts: [[708,440],[922,440],[708,514]], c: [769,464] }
       };
       return renderCadPlan(units, geometry, 'assets/plano-piso2-completo-cad.webp', 940, 770,
-        'Segundo piso completo: Oficina 1, Restaurante y Terraza con parqueadero');
+        'Segundo piso completo: Oficina 1, Restaurante y Balcón con parqueadero');
     }
   }
 };
@@ -454,6 +454,10 @@ function openUnitModal(id) {
   }
 
   // 360 View support (specifically for Oficina Privada 1)
+  // Office 1 opens only the panorama; other units keep their existing details.
+  $$('.um-tab[data-view="plan"], .um-tab[data-view="photo"]').forEach(tab => {
+    tab.style.display = u.id === 'of1' ? 'none' : '';
+  });
   const tab360 = $('#umTab360');
   const frame360 = $('#um360Frame');
   const btn360 = $('#um360FullBtn');
