@@ -367,8 +367,11 @@ const LEVELS = {
         of6: { pts: [[631,36],[687,36],[687,76],[747,76],[747,132],[631,132]] },
         of7: { pts: R(269, 176, 388, 295) }
       };
-      return renderCadPlan(units, geoOf, 'assets/plano-piso2-cad.webp', 910, 490,
-        'Planta arquitectónica del segundo piso de Rivers Mall');
+      const geometry = Object.fromEntries(Object.entries(geoOf).map(([id, g]) => [id, {
+        pts: g.pts.map(([x, y]) => [940 - y / 2, 5 + x / 2])
+      }]));
+      return renderCadPlan(units, geometry, 'assets/plano-piso2-completo-cad.webp', 940, 770,
+        'Planta completa del segundo piso de Rivers Mall con oficinas y parqueadero');
     }
   }
 };
