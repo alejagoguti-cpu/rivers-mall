@@ -89,20 +89,43 @@ new IntersectionObserver((es, o) => es.forEach(e => {
 /* MULTI-LEVEL DATA: SÓTANO, PRIMER PISO, OFICINAS */
 const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
 
-/* Primer piso: polígonos en coordenadas del plano amoblado (viewBox 720 x 876) */
+/* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  'ara': { pts: [[30, 20], [455, 20], [527, 241], [394, 241], [394, 125], [30, 125]], c: [250, 72] },
-  '1': { pts: R(333, 125, 394, 241) }, '2': { pts: R(273, 125, 333, 241) }, '3': { pts: R(212, 125, 273, 241) },
-  '4': { pts: [[92, 125], [212, 125], [212, 241], [152, 241], [152, 180], [92, 180]], c: [182, 158] },
-  'rest': { pts: R(32, 250, 272, 357) },
-  '5': { pts: R(95, 362, 272, 422) }, '6': { pts: R(95, 422, 272, 482) },
-  '7': { pts: R(32, 482, 272, 542) }, '8': { pts: R(32, 542, 272, 602) },
-  'd1': { pts: R(32, 603, 272, 845) },
-  '9': { pts: R(272, 662, 332, 845) }, '10': { pts: R(332, 662, 392, 845) },
-  '11': { pts: R(392, 662, 452, 845) }, '12': { pts: R(452, 662, 512, 845) },
-  'cv': { pts: [[513, 662], [648, 662], [695, 760], [695, 845], [513, 845]], c: [600, 754] },
+  ara: { pts: [[10,10],[397,10],[463,210],[340,210],[340,105],[10,105]], c: [220,57] },
+  '1': { pts: R(285,106,340,209) },
+  '2': { pts: R(229,106,285,209) },
+  '3': { pts: R(175,106,229,209) },
+  '4': { pts: [[65,106],[175,106],[175,209],[119,209],[119,155],[65,155]], c: [147,143] },
+  rest: { pts: R(10,215,229,309) },
+  '5': { pts: R(65,320,229,376) },
+  '6': { pts: R(65,376,229,430) },
+  '7': { pts: R(10,430,229,485) },
+  '8': { pts: R(10,485,229,540) },
+  d1: { pts: R(10,541,229,763) },
+  '9': { pts: R(230,597,285,763) },
+  '10': { pts: R(285,597,340,763) },
+  '11': { pts: R(340,597,395,763) },
+  '12': { pts: R(395,597,450,763) },
+  cv: { pts: [[451,597],[573,597],[616,735],[616,763],[451,763]], c: [520,686] },
+  pkg: { pts: [[281,258],[352,258],[368,248],[403,248],[417,265],[487,265],[514,288],[514,438],[492,473],[514,480],[514,539],[281,539]] }
 };
+
+function renderCadPlan(units, geometry, image, width, height, label) {
+  let svg = `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="${label}">` +
+    `<image href="${image}" width="${width}" height="${height}"/>`;
+  units.forEach(u => {
+    const g = geometry[u.id];
+    if (!g) return;
+    const xs = g.pts.map(p => p[0]), ys = g.pts.map(p => p[1]);
+    const [cx, cy] = g.c || [(Math.min(...xs) + Math.max(...xs)) / 2, (Math.min(...ys) + Math.max(...ys)) / 2];
+    svg += `<g class="su ${u.s}" data-id="${u.id}" tabindex="0" role="button" aria-label="${u.name}" aria-pressed="false">` +
+      `<polygon points="${g.pts.map(p => p.join(',')).join(' ')}"/>` +
+      `<circle cx="${cx}" cy="${cy}" r="11"/>` +
+      `<text x="${cx}" y="${cy + 4}" text-anchor="middle">${u.lbl || u.id.toUpperCase()}</text></g>`;
+  });
+  return svg + '</svg>';
+}
 
 const LEVELS = {
   'sotano': {
@@ -254,24 +277,12 @@ const LEVELS = {
       { id: 'pkg', name: 'Parqueadero Central', s: 'a', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas y zona de movilidad.' }
     ],
     getSvg: function(units) {
-      // Plano girado 90° a la derecha para verlo horizontal: (x, y) -> (876 - y, x)
-      const rot = ([x, y]) => [876 - y, x];
-      let svg = '<svg viewBox="0 0 876 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano arquitectónico amoblado del primer piso">' +
-        '<image href="assets/plano-piso1.png" x="0" y="0" width="876" height="720"/>';
-      units.forEach(u => {
-        const g = geoP1[u.id];
-        if (!g) return;
-        const pts = g.pts.map(rot);
-        const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
-        const [cx, cy] = g.c ? rot(g.c) : [Math.round((Math.min(...xs) + Math.max(...xs)) / 2), Math.round((Math.min(...ys) + Math.max(...ys)) / 2)];
-        const label = u.lbl || u.id.toUpperCase();
-        svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
-          '<polygon points="' + pts.map(p => p.join(',')).join(' ') + '"/>' +
-          '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
-          '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
-          '</g>';
-      });
-      return svg + '</svg>';
+      const rotate = ([x, y]) => [780 - y, x];
+      const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
+        pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
+      }]));
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp', 780, 630,
+        'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
 
@@ -346,75 +357,18 @@ const LEVELS = {
       }
     ],
     getSvg: function(units) {
-      let svg = '<svg viewBox="0 0 876 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Plano de distribución de Oficinas Piso 2 sobre Local 13">' +
-        '<defs>' +
-          '<pattern id="ofGrid" width="30" height="30" patternUnits="userSpaceOnUse">' +
-            '<path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>' +
-          '</pattern>' +
-          '<pattern id="woodDeck2" width="10" height="10" patternUnits="userSpaceOnUse">' +
-            '<line x1="0" y1="0" x2="10" y2="0" stroke="rgba(229,178,90,0.3)" stroke-width="2"/>' +
-          '</pattern>' +
-        '</defs>' +
-
-        '<!-- Proyección de la Primera Planta -->' +
-        '<image href="assets/plano-piso1.png" x="0" y="0" width="876" height="720" opacity="0.22" style="filter: brightness(0.7) contrast(1.1);"/>' +
-        '<rect x="0" y="0" width="876" height="720" fill="url(#ofGrid)"/>' +
-
-        '<!-- Etiqueta de planta proyectada inferior -->' +
-        '<g opacity="0.65">' +
-          '<rect x="230" y="460" width="280" height="30" rx="15" fill="rgba(18,24,28,0.75)" stroke="rgba(127,192,240,0.3)" stroke-width="1"/>' +
-          '<text x="370" y="479" fill="#7fc0f0" font-size="10" font-weight="700" letter-spacing="1.5" text-anchor="middle">PRIMERA PLANTA PROYECTADA (Nivel 1)</text>' +
-        '</g>' +
-
-        '<!-- Placa y contorno de Piso 2 directamente sobre Local 13 -->' +
-        '<g filter="drop-shadow(0 15px 30px rgba(0,0,0,0.7))">' +
-          '<polygon points="858,26 858,458 745,458 745,528 632,530 632,392 745,392 745,26" fill="#171f22" stroke="#3b76a8" stroke-width="2.5"/>' +
-        '</g>' +
-
-        '<!-- Deck Textura Terraza (OF4) -->' +
-        '<polygon points="748,30 856,30 856,120 748,120" fill="url(#woodDeck2)"/>' +
-
-        '<!-- Escalera de acceso desde Primer Piso -->' +
-        '<g>' +
-          '<rect x="640" y="335" width="100" height="52" fill="#1c2529" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>' +
-          '<path d="M 640 344 L 740 344 M 640 353 L 740 353 M 640 362 L 740 362 M 640 371 L 740 371 M 640 380 L 740 380" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>' +
-          '<text x="690" y="365" fill="#7fc0f0" font-size="9" font-weight="700" letter-spacing="1" text-anchor="middle">ACCESO ESCALERA</text>' +
-        '</g>' +
-
-        '<!-- Pasillo de circulación Piso 2 -->' +
-        '<rect x="735" y="30" width="12" height="428" fill="rgba(47,106,154,0.15)"/>' +
-        '<path d="M 741 35 L 741 450" fill="none" stroke="rgba(127,192,240,0.3)" stroke-width="1.5" stroke-dasharray="4 4"/>' +
-
-        '<!-- Título Piso 2 -->' +
-        '<g>' +
-          '<rect x="635" y="8" width="223" height="18" rx="4" fill="rgba(47,106,154,0.3)" stroke="rgba(127,192,240,0.5)" stroke-width="1"/>' +
-          '<text x="746" y="21" fill="#fff" font-size="9.5" font-weight="700" letter-spacing="1.5" text-anchor="middle">PISO 2 · SOBRE LOCAL 13</text>' +
-        '</g>';
-
+      // Hotspots aligned with the second-floor DWG, not the schematic office strip.
       const geoOf = {
-        'of4': { pts: [[748, 30], [856, 30], [856, 120], [748, 120]], c: [802, 75], lbl: 'OF4' },
-        'of1': { pts: [[748, 125], [856, 125], [856, 200], [748, 200]], c: [802, 162], lbl: 'OF1' },
-        'of2': { pts: [[748, 205], [856, 205], [856, 280], [748, 280]], c: [802, 242], lbl: 'OF2' },
-        'of3': { pts: [[748, 285], [856, 285], [856, 370], [748, 370]], c: [802, 327], lbl: 'OF3' },
-        'of5': { pts: [[748, 375], [856, 375], [856, 455], [748, 455]], c: [802, 415], lbl: 'OF5' },
-        'of6': { pts: [[640, 395], [740, 395], [740, 460], [640, 460]], c: [690, 427], lbl: 'OF6' },
-        'of7': { pts: [[640, 465], [740, 465], [740, 525], [635, 527]], c: [688, 495], lbl: 'OF7' }
+        of1: { pts: R(29, 36, 145, 233) },
+        of2: { pts: R(150, 36, 266, 133) },
+        of3: { pts: R(272, 36, 387, 133) },
+        of4: { pts: R(754, 36, 868, 463) },
+        of5: { pts: R(272, 350, 387, 415) },
+        of6: { pts: [[631,36],[687,36],[687,76],[747,76],[747,132],[631,132]] },
+        of7: { pts: R(269, 176, 388, 295) }
       };
-
-      units.forEach(u => {
-        const g = geoOf[u.id];
-        if (!g) return;
-        const pts = g.pts;
-        const [cx, cy] = g.c;
-        const label = u.lbl || g.lbl || u.id.toUpperCase();
-        svg += '<g class="su ' + u.s + '" data-id="' + u.id + '" tabindex="0" role="button" aria-label="' + u.name + '">' +
-          '<polygon points="' + pts.map(p => p.join(',')).join(' ') + '"/>' +
-          '<circle cx="' + cx + '" cy="' + cy + '" r="11"/>' +
-          '<text x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + '</text>' +
-          '</g>';
-      });
-
-      return svg + '</svg>';
+      return renderCadPlan(units, geoOf, 'assets/plano-piso2-cad.webp', 910, 490,
+        'Planta arquitectónica del segundo piso de Rivers Mall');
     }
   }
 };
@@ -487,7 +441,11 @@ function renderLevel(lvlKey, targetUnitId = null) {
 }
 
 function highlightUnit(id) {
-  $$('#ucards .uc, #planimg .su').forEach(el => el.classList.toggle('on', el.dataset.id === id));
+  $$('#ucards .uc, #planimg .su').forEach(el => {
+    const selected = el.dataset.id === id;
+    el.classList.toggle('on', selected);
+    el.setAttribute('aria-pressed', String(selected));
+  });
 }
 
 function link(id, on) {
