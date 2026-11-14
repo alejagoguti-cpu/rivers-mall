@@ -290,88 +290,33 @@ const LEVELS = {
     name: 'Oficinas',
     eyebrow: 'Edificio Norte · Piso 2 & Oficinas Corporativas',
     title: 'Espacios de Trabajo & Coworking',
-    lead: 'Explora las oficinas corporativas ubicadas en el segundo nivel sobre el Local 13, con terraza panorámica, salas ejecutivas y acabados de primer nivel.',
+    lead: 'Selecciona Oficina 1, Restaurante o Terraza. Haz doble clic en Oficina 1 para abrir su vista panorámica 360°.',
     units: [
       {
-        id: 'of1',
-        name: 'Oficina Privada 1',
-        s: 'a',
-        area: '42,50 m²',
-        use: 'Oficina Corporativa (5-10 pers.)',
+        id: 'of1', name: 'Oficina 1', lbl: '1', s: 'a', use: 'Oficina',
         photo: 'assets/oficinas-privada.jpg',
-        desc: 'Módulo corporativo privado completamente amoblado, con cielo raso alistonado en madera natural, amplios ventanales y conectividad de alta velocidad.'
+        desc: 'Oficina 1 del segundo piso. Haz doble clic en el plano o en su ficha para abrir la vista panorámica 360°.'
       },
       {
-        id: 'of2',
-        name: 'Oficina Privada 2',
-        s: 'a',
-        area: '38,20 m²',
-        use: 'Oficina Corporativa (4-8 pers.)',
-        photo: 'assets/oficinas-trabajo.webp',
-        desc: 'Espacio privado de trabajo con luz natural, mobiliario ergonómico integrado, aire acondicionado independiente y cerradura electrónica.'
-      },
-      {
-        id: 'of3',
-        name: 'Sala de Juntas Corporativa',
-        s: 'a',
-        area: '34,80 m²',
-        use: 'Reuniones & Directorio',
-        photo: 'assets/oficinas-juntas.jpg',
-        desc: 'Equipada con pantalla de 85 pulgadas para videoconferencias, mesa ejecutiva para 12 directivos y tratamiento acústico de panel ranurado WPC.'
-      },
-      {
-        id: 'of4',
-        name: 'Terraza & Deck Lounge',
-        s: 'a',
-        area: '85,00 m²',
-        use: 'Terraza Panorámica Común',
-        photo: 'assets/oficinas-terraza.png',
-        desc: 'Deck al aire libre con cielo raso de madera, zonas lounge, vegetación paisajística y vista abierta hacia los cerros de Cúcuta.'
-      },
-      {
-        id: 'of5',
-        name: 'Cafetería & Barra Mirador',
-        s: 'a',
-        area: '48,00 m²',
-        use: 'Breakout & Cafetería Comunal',
+        id: 'rest2', name: 'Restaurante', lbl: 'R', s: 'a', use: 'Restaurante',
         photo: 'assets/oficinas-cafeteria.jpg',
-        desc: 'Área comunal de descanso con barra lineal de ventanales, isla de servicio de café, estación de microondas y mesas comunales.'
+        desc: 'Restaurante del segundo piso, junto a la terraza.'
       },
       {
-        id: 'of6',
-        name: 'Cabinas Acústicas',
-        s: 'a',
-        area: '12,00 m²',
-        use: 'Phone Booths Privados',
-        photo: 'assets/oficinas-cabinas.webp',
-        desc: 'Módulos insonorizados para llamadas telefónicas confidenciales y videollamadas individuales sin interrupciones.'
-      },
-      {
-        id: 'of7',
-        name: 'Batería Sanitaria & PMR',
-        s: 'o',
-        area: '32,00 m²',
-        use: 'Baños de Oficinas & Accesibilidad',
-        photo: 'assets/oficinas-comun.webp',
-        desc: 'Núcleo sanitario contemporáneo con mesones flotantes, acabados de madera, espejos retroiluminados y baño accesible PMR bajo norma universal.'
+        id: 'terraza2', name: 'Terraza', lbl: 'T', s: 'a', use: 'Terraza',
+        photo: 'assets/oficinas-terraza.png',
+        desc: 'Terraza del segundo piso, contigua al restaurante.'
       }
     ],
     getSvg: function(units) {
-      // Hotspots aligned with the second-floor DWG, not the schematic office strip.
-      const geoOf = {
-        of1: { pts: R(29, 36, 145, 233) },
-        of2: { pts: R(150, 36, 266, 133) },
-        of3: { pts: R(272, 36, 387, 133) },
-        of4: { pts: R(754, 36, 868, 463) },
-        of5: { pts: R(272, 350, 387, 415) },
-        of6: { pts: [[631,36],[687,36],[687,76],[747,76],[747,132],[631,132]] },
-        of7: { pts: R(269, 176, 388, 295) }
+      // Only the three regions identified by the user are interactive.
+      const geometry = {
+        of1: { pts: R(708, 200, 922, 320) },
+        rest2: { pts: R(708, 321, 922, 439) },
+        terraza2: { pts: [[708,440],[922,440],[708,514]], c: [769,464] }
       };
-      const geometry = Object.fromEntries(Object.entries(geoOf).map(([id, g]) => [id, {
-        pts: g.pts.map(([x, y]) => [940 - y / 2, 5 + x / 2])
-      }]));
       return renderCadPlan(units, geometry, 'assets/plano-piso2-completo-cad.webp', 940, 770,
-        'Planta completa del segundo piso de Rivers Mall con oficinas y parqueadero');
+        'Segundo piso completo: Oficina 1, Restaurante y Terraza con parqueadero');
     }
   }
 };
@@ -429,6 +374,12 @@ function renderLevel(lvlKey, targetUnitId = null) {
       }
     });
     el.addEventListener('click', pick);
+    el.addEventListener('dblclick', e => {
+      if (activeLevel === 'oficinas' && el.dataset.id === 'of1') {
+        e.preventDefault();
+        openUnitModal('of1');
+      }
+    });
     el.addEventListener('mouseenter', () => link(el.dataset.id, true));
     el.addEventListener('mouseleave', () => link(el.dataset.id, false));
   });
