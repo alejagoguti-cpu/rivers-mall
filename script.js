@@ -88,6 +88,7 @@ new IntersectionObserver((es, o) => es.forEach(e => {
 
 /* MULTI-LEVEL DATA: SÓTANO, PRIMER PISO, OFICINAS */
 const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
+const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
@@ -274,7 +275,7 @@ const LEVELS = {
       { id: 'd1', name: 'Local 14', s: 'a', area: '557 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local de gran formato en la esquina inferior izquierda del primer piso.', lbl: '14' },
       { id: 'cv', name: 'Local 15', s: 'a', area: '284 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local en la esquina inferior derecha del primer piso.', lbl: '15' },
       { id: 'rest', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80', desc: 'Zona de restaurante con mesas, frente a la circulación central.', lbl: 'R' },
-      { id: 'pkg', name: 'Parqueadero Central', s: 'a', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Estacionamiento vehicular en superficie con rotonda ajardinada, 25+ celdas y zona de movilidad.' }
+      { id: 'pkg', name: 'Parqueadero Central', s: 'a', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Parqueadero central y espacio público. Haz doble clic en la zona o en su ficha para abrir la vista panorámica 360°.' }
     ],
     getSvg: function(units) {
       const rotate = ([x, y]) => [780 - y, x];
@@ -375,9 +376,9 @@ function renderLevel(lvlKey, targetUnitId = null) {
     });
     el.addEventListener('click', pick);
     el.addEventListener('dblclick', e => {
-      if (activeLevel === 'oficinas' && el.dataset.id === 'of1') {
+      if (PANORAMAS[el.dataset.id]) {
         e.preventDefault();
-        openUnitModal('of1');
+        openUnitModal(el.dataset.id);
       }
     });
     el.addEventListener('mouseenter', () => link(el.dataset.id, true));
@@ -453,21 +454,24 @@ function openUnitModal(id) {
     if (activeEl) activeEl.classList.add('on');
   }
 
-  // 360 View support (specifically for Oficina Privada 1)
-  // Office 1 opens only the panorama; other units keep their existing details.
+  // Each connected space opens its own panoramic viewer.
+  const panoramaUrl = PANORAMAS[u.id];
   $$('.um-tab[data-view="plan"], .um-tab[data-view="photo"]').forEach(tab => {
-    tab.style.display = u.id === 'of1' ? 'none' : '';
+    tab.style.display = panoramaUrl ? 'none' : '';
   });
   const tab360 = $('#umTab360');
   const frame360 = $('#um360Frame');
   const btn360 = $('#um360FullBtn');
-  if (u.id === 'of1') {
+  if (panoramaUrl) {
     if (tab360) tab360.style.display = 'inline-flex';
-    if (btn360) btn360.style.display = 'inline-block';
-    if (frame360 && frame360.getAttribute('src') !== 'oficina-360.html') {
-      frame360.src = 'oficina-360.html';
+    if (btn360) {
+      btn360.style.display = 'inline-block';
+      btn360.href = panoramaUrl;
     }
-    // Directly show 360 view for Oficina Privada 1
+    if (frame360 && frame360.getAttribute('src') !== panoramaUrl) {
+      frame360.src = panoramaUrl;
+    }
+    // Open the panorama directly.
     switchUmTab('360');
   } else {
     if (tab360) tab360.style.display = 'none';
