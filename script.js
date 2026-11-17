@@ -98,7 +98,7 @@ const geoP1 = {
   '1': { pts: R(285,106,340,209) },
   '2': { pts: R(229,106,285,209) },
   '3': { pts: R(175,106,229,209) },
-  '4': { pts: [[65,106],[175,106],[175,209],[119,209],[119,155],[65,155]], c: [147,143] },
+  '4': { pts: R(65,106,175,209) },
   rest: { pts: R(10,215,229,309) },
   '5': { pts: R(65,320,229,376) },
   '6': { pts: R(65,376,229,430) },
@@ -109,7 +109,8 @@ const geoP1 = {
   '10': { pts: R(285,595,340,763) },
   '11': { pts: R(340,595,395,763) },
   '12': { pts: R(395,595,450,763) },
-  cv: { pts: [[451,595],[573,595],[616,735],[616,763],[451,763]], c: [520,680] },
+  '13': { pts: R(450,595,505,763) },
+  '14': { pts: [[505,595],[573,595],[616,735],[616,763],[505,763]], c: [545,680] },
   pkg: { pts: [[281,258],[352,258],[368,248],[403,248],[417,265],[487,265],[514,288],[514,438],[492,473],[514,480],[514,539],[281,539]] }
 };
 
@@ -260,22 +261,23 @@ const LEVELS = {
     title: 'Donde tu marca pertenece',
     lead: 'Explora la distribución comercial del primer piso. Presiona cualquier local, ancla o zona para ver sus especificaciones y planos detallados.',
     units: [
-      { id: '1', name: 'Local 1', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, contiguo al Local 13.' },
+      { id: '1', name: 'Local 1', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, contiguo al Local 16 & Terraza.' },
       { id: '2', name: 'Local 2', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, entre los locales 1 y 3.' },
       { id: '3', name: 'Local 3', s: 'a', area: '62 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la franja superior, entre los locales 2 y 4.' },
-      { id: '4', name: 'Local 4', s: 'a', area: '93 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local en L, el de mayor área de la franja superior.' },
+      { id: '4', name: 'Local 4', s: 'a', area: '113 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial de planta cuadrada en la franja superior, junto a circulaciones y escaleras.' },
       { id: '5', name: 'Local 5', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la columna izquierda, junto a la batería de baños.' },
       { id: '6', name: 'Local 6', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la columna izquierda, entre los locales 5 y 7.' },
-      { id: '7', name: 'Local 7', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda.' },
-      { id: '8', name: 'Local 8', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda, contiguo al Local 14.' },
+      { id: '7', name: 'Local 7', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda con mezanina reubicada al muro perimetral.' },
+      { id: '8', name: 'Local 8', s: 'a', area: '132 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=700&q=80', desc: 'Local de fondo completo en la columna izquierda, contiguo al Local 15.' },
       { id: '9', name: 'Local 9', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, frente a la circulación central.' },
       { id: '10', name: 'Local 10', s: 'a', area: '98 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 9 y 11.' },
       { id: '11', name: 'Local 11', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 10 y 12.' },
-      { id: '12', name: 'Local 12', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, contiguo al Local 15.' },
-      { id: 'ara', name: 'Local 13 & Terraza', s: 'a', area: '640 m²', use: 'Retail / Comercio & Terraza', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial de gran formato con terraza cubierta y zona exterior integrada bajo el Local 1.', lbl: '13' },
+      { id: '12', name: 'Local 12', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 11 y 13.' },
+      { id: '13', name: 'Local 13', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial rectangular recto con el perímetro, contiguo al Local 12.', lbl: '13' },
+      { id: '14', name: 'Local 14', s: 'a', area: '195 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial en esquina inferior con vitrina hacia la rotonda vehicular.', lbl: '14' },
+      { id: 'd1', name: 'Local 15', s: 'a', area: '557 m²', use: 'Supermercado / Gran Formato', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Almacén ancla de gran formato en la esquina superior izquierda.', lbl: '15' },
+      { id: 'ara', name: 'Local 16 & Terraza', s: 'a', area: '640 m²', use: 'Retail / Gran Formato & Terraza', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial de gran formato con terraza cubierta y zona exterior integrada bajo el Local 1.', lbl: '16' },
       { id: 'asc', name: 'Ascensor', s: 'a', area: '12 m²', use: 'Circulación Vertical', photo: 'assets/hero.jpg', desc: 'Ascensor de acceso rápido entre el Primer Piso y el Piso 2 de Oficinas Corporativas y Restaurante.', lbl: 'ASC' },
-      { id: 'd1', name: 'Local 14', s: 'a', area: '557 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local de gran formato en la esquina inferior izquierda del primer piso.', lbl: '14' },
-      { id: 'cv', name: 'Local 15', s: 'a', area: '284 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local en la esquina inferior derecha del primer piso.', lbl: '15' },
       { id: 'rest', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80', desc: 'Zona de restaurante con mesas, frente a la circulación central.', lbl: 'R' },
       { id: 'pkg', name: 'Parqueadero Central', s: 'a', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Parqueadero central y espacio público. Haz doble clic en la zona o en su ficha para abrir la vista panorámica 360°.' }
     ],
@@ -284,7 +286,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=74', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=75', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
