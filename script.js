@@ -110,7 +110,7 @@ const geoP1 = {
   '11': { pts: R(340,595,395,763) },
   '12': { pts: R(395,595,450,763) },
   '13': { pts: R(450,595,505,763) },
-  '14': { pts: [[505,595],[573,595],[616,735],[616,763],[505,763]], c: [545,680] },
+  '14': { pts: [[505,595],[555,595],[560,640],[616,735],[616,763],[505,763]], c: [545,680] },
   pkg: { pts: [[281,258],[352,258],[368,248],[403,248],[417,265],[487,265],[514,288],[514,438],[492,473],[514,480],[514,539],[281,539]] }
 };
 
@@ -286,7 +286,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=75', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=76', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
