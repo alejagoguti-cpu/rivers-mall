@@ -284,7 +284,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=70', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=71', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
