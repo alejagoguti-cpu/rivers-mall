@@ -93,7 +93,7 @@ const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  ara: { pts: [[65,60],[10,60],[10,0],[420,0],[455,45],[455,215],[345,215],[345,105],[65,105]], c: [240,52] },
+  ara: { pts: [[65,60],[10,60],[10,11],[396,11],[457,214],[345,214],[345,105],[65,105]], c: [240,52] },
   asc: { pts: [[10,10],[60,10],[60,60],[10,60]], c: [35,35] },
   '1': { pts: R(285,106,340,209) },
   '2': { pts: R(229,106,285,209) },
@@ -286,7 +286,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=76', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=77', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
