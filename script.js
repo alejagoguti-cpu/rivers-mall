@@ -93,7 +93,8 @@ const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  ara: { pts: [[10,10],[397,10],[463,210],[340,210],[340,105],[10,105]], c: [220,57] },
+  ara: { pts: [[65,60],[10,60],[10,0],[420,0],[455,45],[455,215],[345,215],[345,105],[65,105]], c: [240,52] },
+  asc: { pts: [[10,10],[60,10],[60,60],[10,60]], c: [35,35] },
   '1': { pts: R(285,106,340,209) },
   '2': { pts: R(229,106,285,209) },
   '3': { pts: R(175,106,229,209) },
@@ -271,7 +272,8 @@ const LEVELS = {
       { id: '10', name: 'Local 10', s: 'a', area: '98 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 9 y 11.' },
       { id: '11', name: 'Local 11', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, entre los locales 10 y 12.' },
       { id: '12', name: 'Local 12', s: 'a', area: '99 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local en la fila inferior, contiguo al Local 15.' },
-      { id: 'ara', name: 'Local 13', s: 'a', area: '541 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local de gran formato que ocupa la franja superior del primer piso, junto al acceso vehicular.', lbl: '13' },
+      { id: 'ara', name: 'Local 13 & Terraza', s: 'a', area: '640 m²', use: 'Retail / Comercio & Terraza', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial de gran formato con terraza cubierta y zona exterior integrada bajo el Local 1.', lbl: '13' },
+      { id: 'asc', name: 'Ascensor', s: 'a', area: '12 m²', use: 'Circulación Vertical', photo: 'assets/hero.jpg', desc: 'Ascensor de acceso rápido entre el Primer Piso y el Piso 2 de Oficinas Corporativas y Restaurante.', lbl: 'ASC' },
       { id: 'd1', name: 'Local 14', s: 'a', area: '557 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Local de gran formato en la esquina inferior izquierda del primer piso.', lbl: '14' },
       { id: 'cv', name: 'Local 15', s: 'a', area: '284 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local en la esquina inferior derecha del primer piso.', lbl: '15' },
       { id: 'rest', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80', desc: 'Zona de restaurante con mesas, frente a la circulación central.', lbl: 'R' },
@@ -282,7 +284,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=68', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=69', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
