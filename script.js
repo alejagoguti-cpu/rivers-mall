@@ -105,11 +105,11 @@ const geoP1 = {
   '7': { pts: R(10,430,229,485) },
   '8': { pts: R(10,485,229,540) },
   d1: { pts: R(10,541,229,763) },
-  '9': { pts: R(230,540,285,763) },
-  '10': { pts: R(285,540,340,763) },
-  '11': { pts: R(340,540,395,763) },
-  '12': { pts: R(395,540,450,763) },
-  cv: { pts: [[451,540],[573,540],[616,735],[616,763],[451,763]], c: [520,651] },
+  '9': { pts: R(230,595,285,763) },
+  '10': { pts: R(285,595,340,763) },
+  '11': { pts: R(340,595,395,763) },
+  '12': { pts: R(395,595,450,763) },
+  cv: { pts: [[451,595],[573,595],[616,735],[616,763],[451,763]], c: [520,680] },
   pkg: { pts: [[281,258],[352,258],[368,248],[403,248],[417,265],[487,265],[514,288],[514,438],[492,473],[514,480],[514,539],[281,539]] }
 };
 
@@ -284,7 +284,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=71', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=72', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
