@@ -88,7 +88,7 @@ new IntersectionObserver((es, o) => es.forEach(e => {
 
 /* MULTI-LEVEL DATA: SÓTANO, PRIMER PISO, OFICINAS */
 const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
-const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
+const PANORAMAS = { '14': 'farmacia-180-8k-inmersiva.html', of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
@@ -465,10 +465,17 @@ function openUnitModal(id) {
   const frame360 = $('#um360Frame');
   const btn360 = $('#um360FullBtn');
   if (panoramaUrl) {
-    if (tab360) tab360.style.display = 'inline-flex';
+    const angle = u.id === '14' ? '180°' : '360°';
+    if (tab360) {
+      tab360.style.display = 'inline-flex';
+      tab360.textContent = '🔄 Vista ' + angle + ' Interactiva';
+    }
     if (btn360) {
       btn360.style.display = 'inline-block';
       btn360.href = panoramaUrl;
+      btn360.querySelectorAll('em').forEach(label => {
+        label.textContent = 'Abrir ' + angle + ' Completo ⛶';
+      });
     }
     if (frame360 && frame360.getAttribute('src') !== panoramaUrl) {
       frame360.src = panoramaUrl;
