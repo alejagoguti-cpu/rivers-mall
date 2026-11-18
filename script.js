@@ -93,8 +93,7 @@ const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  ara: { pts: [[64,60],[9,60],[9,9],[397,9],[464,209],[344,209],[344,101],[64,101]], c: [240,52] },
-  asc: { pts: [[10,10],[60,10],[60,60],[10,60]], c: [35,35] },
+  ara: { pts: [[9,101],[9,9],[397,9],[464,209],[344,209],[344,101]], c: [240,52] },
   '1': { pts: R(286,101,342,209) },
   '2': { pts: R(230,101,286,209) },
   '3': { pts: R(176,101,230,209) },
@@ -277,7 +276,6 @@ const LEVELS = {
       { id: '14', name: 'Local 14', s: 'a', area: '195 m²', use: 'Retail / Comercio', photo: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial en esquina inferior con vitrina hacia la rotonda vehicular.', lbl: '14' },
       { id: 'd1', name: 'Local 15', s: 'a', area: '557 m²', use: 'Supermercado / Gran Formato', photo: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=700&q=80', desc: 'Almacén ancla de gran formato en la esquina superior izquierda.', lbl: '15' },
       { id: 'ara', name: 'Local 16 & Terraza', s: 'a', area: '640 m²', use: 'Retail / Gran Formato & Terraza', photo: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=700&q=80', desc: 'Local comercial de gran formato con terraza cubierta y zona exterior integrada bajo el Local 1.', lbl: '16' },
-      { id: 'asc', name: 'Ascensor', s: 'a', area: '12 m²', use: 'Circulación Vertical', photo: 'assets/hero.jpg', desc: 'Ascensor de acceso rápido entre el Primer Piso y el Piso 2 de Oficinas Corporativas y Restaurante.', lbl: 'ASC' },
       { id: 'rest', name: 'Restaurante', s: 'a', area: '245 m²', use: 'Gastronomía / Restaurante', photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80', desc: 'Zona de restaurante con mesas, frente a la circulación central.', lbl: 'R' },
       { id: 'pkg', name: 'Parqueadero Central', s: 'a', area: '1.450 m²', use: 'Estacionamiento & Rotonda', photo: 'assets/sotano-parqueadero.webp', desc: 'Parqueadero central y espacio público. Haz doble clic en la zona o en su ficha para abrir la vista panorámica 360°.' }
     ],
