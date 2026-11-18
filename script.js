@@ -93,12 +93,12 @@ const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  ara: { pts: [[65,60],[10,60],[10,11],[396,11],[457,214],[345,214],[345,105],[65,105]], c: [240,52] },
+  ara: { pts: [[64,60],[9,60],[9,9],[397,9],[464,209],[344,209],[344,101],[64,101]], c: [240,52] },
   asc: { pts: [[10,10],[60,10],[60,60],[10,60]], c: [35,35] },
-  '1': { pts: R(285,106,340,209) },
-  '2': { pts: R(229,106,285,209) },
-  '3': { pts: R(175,106,229,209) },
-  '4': { pts: R(65,106,175,209) },
+  '1': { pts: R(286,101,342,209) },
+  '2': { pts: R(230,101,286,209) },
+  '3': { pts: R(176,101,230,209) },
+  '4': { pts: R(64,101,176,209) },
   rest: { pts: R(10,215,229,309) },
   '5': { pts: R(65,320,229,376) },
   '6': { pts: R(65,376,229,430) },
@@ -110,7 +110,7 @@ const geoP1 = {
   '11': { pts: R(340,595,395,763) },
   '12': { pts: R(395,595,450,763) },
   '13': { pts: R(450,595,505,763) },
-  '14': { pts: [[505,595],[555,595],[560,640],[616,735],[616,763],[505,763]], c: [545,680] },
+  '14': { pts: [[507,595],[577,595],[619,705],[619,763],[507,763]], c: [553,680] },
   pkg: { pts: [[281,258],[352,258],[368,248],[403,248],[417,265],[487,265],[514,288],[514,438],[492,473],[514,480],[514,539],[281,539]] }
 };
 
@@ -286,7 +286,7 @@ const LEVELS = {
       const geometry = Object.fromEntries(Object.entries(geoP1).map(([id, g]) => [id, {
         pts: g.pts.map(rotate), ...(g.c ? { c: rotate(g.c) } : {})
       }]));
-      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=77', 780, 630,
+      return renderCadPlan(units, geometry, 'assets/plano-piso1-cad.webp?v=78', 780, 630,
         'Planta arquitectónica del primer piso de Rivers Mall');
     }
   },
