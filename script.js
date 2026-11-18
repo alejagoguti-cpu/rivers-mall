@@ -93,7 +93,7 @@ const PANORAMAS = { of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
 const geoP1 = {
-  ara: { pts: [[9,101],[9,9],[397,9],[464,209],[344,209],[344,101]], c: [240,52] },
+  ara: { pts: [[62,101],[62,68],[9,68],[9,9],[397,9],[464,209],[344,209],[344,101]], c: [240,52] },
   '1': { pts: R(286,101,342,209) },
   '2': { pts: R(230,101,286,209) },
   '3': { pts: R(176,101,230,209) },
