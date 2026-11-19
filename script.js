@@ -88,7 +88,7 @@ new IntersectionObserver((es, o) => es.forEach(e => {
 
 /* MULTI-LEVEL DATA: SÓTANO, PRIMER PISO, OFICINAS */
 const STATE = { a: 'Disponible', o: 'Ocupado', c: 'Próximamente' };
-const PANORAMAS = { '14': 'farmacia-180-8k-inmersiva.html', of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
+const PANORAMAS = { '14': 'farmacia-180-8k-inmersiva.html?v=82', of1: 'oficina-360.html', pkg: 'espacio-publico-360.html' };
 
 /* DWG floor-plan coordinates, aligned before the clockwise display rotation. */
 const R = (x1, y1, x2, y2) => [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
@@ -364,6 +364,9 @@ function renderLevel(lvlKey, targetUnitId = null) {
 
   // Bind interactive events for cards and SVG rooms
   $$('#ucards .uc, #planimg .su').forEach(el => {
+    const hasPanorama = Boolean(PANORAMAS[el.dataset.id]);
+    let lastTouch = 0;
+    if (hasPanorama) el.style.touchAction = 'manipulation';
     // Click / Enter only lights up the unit on the plan and its card in the list
     const pick = () => {
       highlightUnit(el.dataset.id);
@@ -373,14 +376,26 @@ function renderLevel(lvlKey, targetUnitId = null) {
     el.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        pick();
+        if (hasPanorama) openUnitModal(el.dataset.id);
+        else pick();
       }
     });
-    el.addEventListener('click', pick);
+    el.addEventListener('click', e => {
+      if (hasPanorama && e.pointerType === 'touch') {
+        const now = performance.now();
+        if (lastTouch && now - lastTouch < 450) {
+          lastTouch = 0;
+          openUnitModal(el.dataset.id);
+          return;
+        }
+        lastTouch = now;
+      }
+      pick();
+    });
     el.addEventListener('dblclick', e => {
-      if (PANORAMAS[el.dataset.id]) {
+      if (hasPanorama) {
         e.preventDefault();
-        openUnitModal(el.dataset.id);
+        if (!$('#unitModal').classList.contains('open')) openUnitModal(el.dataset.id);
       }
     });
     el.addEventListener('mouseenter', () => link(el.dataset.id, true));
